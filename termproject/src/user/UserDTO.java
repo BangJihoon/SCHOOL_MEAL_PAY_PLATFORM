@@ -10,6 +10,7 @@ public class UserDTO {
 	private String email;
 	private String birth;
 	private String phone;
+	private boolean admin;
 	public String getUserID() {
 		return userID;
 	}
@@ -58,9 +59,17 @@ public class UserDTO {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}	
+	public boolean getAdmin() {
+		return admin;
+	}
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}	
+	
 	public UserDTO() {
 	}
-	public UserDTO(String userID,String userPW,String school,String snum,String name,String email,String birth,String phone) {
+	
+	public UserDTO(String userID,String userPW,String school,String snum,String name,String email,String birth,String phone,boolean admin) {
 		this.userID = userID;
 		this.userPW = userPW;
 		this.school = school;
@@ -69,6 +78,7 @@ public class UserDTO {
 		this.email = email;
 		this.birth = birth;
 		this.phone = phone;
+		this.admin = admin;
 		
 	}
 }

@@ -180,7 +180,12 @@ color:#000000;
 				}
 			sum.value = parseInt(hm.value) * sell_price;
 		}
-
+		function commify(n) { 		//1,000단위 마다 콤마찍는 함수
+			var reg = /(^[+-]?\d+)(\d{3})/; // 정규식 
+			n += ''; // 숫자를 문자열로 변환
+			while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
+			return n;
+		}
 </script>
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메뉴시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->			
 	

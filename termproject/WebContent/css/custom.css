@@ -110,6 +110,15 @@ html,body{
 	margin:30px;
 	font-size:2em;
 }
+.bbs{
+	margin:30px;
+	weight:90%;
+}
+.bbsHeader{
+	color:deepblue;
+	font-weight: bold;
+	font-size:1.5em;
+}
 .menu{
 	text-align: center;
 	weight:100%;
@@ -205,9 +214,11 @@ label.__checkboxArea.active{
 .ticket input[type=text]{ 
 	width:150px; height:50px;margin:0; padding:0; 
 	border-color:white;
+	text-align: center;
 }
 .ticket input[type=button]{ 
 	width:50px; height:50px;margin:0; padding:0; 
+	text-align: center;
 }
 
 /*----------------- 회원가입 유효성 검사  -------------------------------------------------*/

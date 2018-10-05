@@ -12,6 +12,7 @@
 		String email = null;
 		String birth = null;
 		String phone = null;
+		boolean admin= false;
 
 
 		if(request.getParameter("userID")!=null){
@@ -51,7 +52,7 @@
 		
 		
 		UserDAO userDAO = new UserDAO();
-		int result = userDAO.join(new UserDTO(userID,userPW,school,snum,name,email,birth,phone));
+		int result = userDAO.join(new UserDTO(userID,userPW,school,snum,name,email,birth,phone,admin));
 		
 		if (result ==-1){ 
 			PrintWriter script = response.getWriter();

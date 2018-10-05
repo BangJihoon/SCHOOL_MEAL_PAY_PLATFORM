@@ -7,17 +7,6 @@ import java.util.ArrayList;
 import util.DatabaseUtil;
 
 public class MenuDAO {
-	public MenuDAO() {
-		Connection conn = null;
-		try {
-			conn = DatabaseUtil.getConnection();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}finally {
-			try { if(conn!=null) conn.close();}catch(Exception e){e.printStackTrace();}	
-		}
-	}
-	
 	public ArrayList<MenuDTO> getList(String storeID){
 		String SQL = "SELECT * FROM menu WHERE storeID=?";
 		ArrayList<MenuDTO> list = new ArrayList<MenuDTO>();
@@ -55,8 +44,8 @@ public class MenuDAO {
 	
 	
 	
-	public  static ArrayList<MenuDTO> getTodayMenu(String storeID,String menuDate) {
-		String SQL = "SELECT * FROM menu WHERE storeID=? & menuDate=?";
+	public ArrayList<MenuDTO> getTodayMenu(String storeID,String menuDate) {
+		String SQL = "SELECT * FROM menu WHERE storeID=? and menuDate=?";
 		ArrayList<MenuDTO> list = new ArrayList<MenuDTO>();
 		
 		PreparedStatement pstmt = null;

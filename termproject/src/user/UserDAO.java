@@ -8,7 +8,7 @@ import util.DatabaseUtil;
 
 public class UserDAO {
 	public int join(UserDTO user) {
-		String SQL = "INSERT INTO USER VALUES(?,?,?,?,?,?,?,?)";
+		String SQL = "INSERT INTO USER VALUES(?,?,?,?,?,?,?,?,false)";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		try {
@@ -54,6 +54,7 @@ public class UserDAO {
 			e.printStackTrace();
 		}
 		return -2;	// db접근 오류
-	
 	}
+	
+	
 }

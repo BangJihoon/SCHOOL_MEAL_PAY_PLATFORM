@@ -4,8 +4,12 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="user.*" %>
-<%@ page import="menu.*" %>
+<%@ page import="user.UserDAO" %>
+<%@ page import="menu.MenuDAO" %>
+<%@ page import="user.UserDTO" %>
+<%@ page import="menu.MenuDTO" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,12 +57,18 @@
 					</div>
 				</li>
 				
-	  			<li> 
-	  				<a class="nav-link" id="navfont" href="index.jsp">카 페</a>
-	  			</li>
+	  			<li class="nav-item dropdown"> 
+					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 카 페 </a>
+					<div class="dropdown-menu" aria-labelledby="dropdown">
+						<a class="dropdown-item"  id="navfont" href="buildingH.jsp">Olive Green</a>
+						<a class="dropdown-item" id="navfont"  href="buildingB.jsp">Cafe SP</a>
+						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">Cafe SB</a>
+						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">Laural</a>
+					</div>
+				</li>
 	  			
 	  			<li> 
-	  				<a class="nav-link" id="navfont" href="index.jsp">결 제</a>
+	  				<a class="nav-link" id="navfont" href="review.jsp">후 기</a>
 	  			</li>
 			</ul>
 			<form class="form-inline my-2 ">
@@ -69,7 +79,7 @@
 		 	if(userID!=null){				
 			%>
 			<ul class="nav navbar-nav navbar-right">	
-				<li><a class="dropdown-item" href="#">MyPage</a></li>		
+				<li><a class="dropdown-item" href="#">My Ticket</a></li>		
 				<li><a class="dropdown-item" href="logoutAction.jsp">Logout</a></li>		
 			</ul>
  			<%
@@ -129,7 +139,7 @@
 				  document.write(today.getMonth()+1,"월 ");
 				  document.write(today.getDate()+"일 ");
 				  document.write("[",wkday[today.getDay()],"요일]");  //요일주의
-				  tdate = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate()
+				  //tdate =today.toISOString().slice(0,10);
 				  //document.write(tdate);
 				</script>
 			</h2>
@@ -141,8 +151,10 @@
 			</a>
 			<div class="form-inline">
 				<%
-					ArrayList<MenuDTO> list = new ArrayList<MenuDTO>();
-					list = new MenuDAO().getTodayMenu("buildingH", "2018-09-28");
+					MenuDAO menuDAO = new MenuDAO();
+					Date date = new Date();	//오늘날짜 받기
+					String today = new SimpleDateFormat("yyyy-MM-dd").format(date);	//String  형식으로 변환
+					ArrayList<MenuDTO> list = menuDAO.getTodayMenu("buildingH",today);	//넣어줌
 					
 					for(int i=0;i<list.size();i++){
 				%>					
@@ -170,17 +182,16 @@
 		</a>
 			<div class="form-inline">
 				<%
-				ArrayList<MenuDTO> list2 = MenuDAO.getTodayMenu("buildingB", "2018-09-28");
-					
-					for(int i=0;i<list2.size();i++){
+					list = menuDAO.getTodayMenu("buildingB",today);
+					for(int i=0;i<list.size();i++){
 				%>					
 				<div class="col-lg-4">
 					<div class="menu">
-						<p id=menuTitle><%=list2.get(i).getMenuName()%></p>
-						<p><%=list2.get(i).getSide1()%></p>
-						<p><%=list2.get(i).getSide2()%></p>
-						<p><%=list2.get(i).getSide3()%></p>
-						<p id=menuPrice><%=list2.get(i).getPrice()%></p>						
+						<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+						<p><%=list.get(i).getSide1()%></p>
+						<p><%=list.get(i).getSide2()%></p>
+						<p><%=list.get(i).getSide3()%></p>
+						<p id=menuPrice><%=list.get(i).getPrice()%></p>						
 					</div>
 				</div>
 				<%
@@ -197,17 +208,16 @@
 		</a>	
 			<div class="form-inline">
 				<%
-				ArrayList<MenuDTO> list3 = MenuDAO.getTodayMenu("buildingC", "2018-09-28");
-					
-					for(int i=0;i<list3.size();i++){
+					list = menuDAO.getTodayMenu("buildingC", today);
+					for(int i=0;i<list.size();i++){
 				%>					
 				<div class="col-lg-4">
 					<div class="menu">
-						<p id=menuTitle><%=list3.get(i).getMenuName()%></p>
-						<p><%=list3.get(i).getSide1()%></p>
-						<p><%=list3.get(i).getSide2()%></p>
-						<p><%=list3.get(i).getSide3()%></p>
-						<p id=menuPrice><%=list3.get(i).getPrice()%></p>						
+						<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+						<p><%=list.get(i).getSide1()%></p>
+						<p><%=list.get(i).getSide2()%></p>
+						<p><%=list.get(i).getSide3()%></p>
+						<p id=menuPrice><%=list.get(i).getPrice()%></p>						
 					</div>
 				</div>
 				<%

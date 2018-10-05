@@ -147,19 +147,15 @@ color:#000000;
 	 	<br><br><br><br>
 	 </div>
 
-<!--   footer     -->
+<!--   footer    -->
     <footer style="background-color: skyblue; color:black;">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-lg-offset-1 text-center COLSPAN=5 ALIGN=center">
                     <br>
-                    <h2><strong> 학식이는 서경대 컴퓨터과학과 학생의 캡스톤작품입니다 </strong>
-                    </h2>
-                    <p>불편 피드백은 메일로 주세요 <br>  </p>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-phone fa-fw"></i> jihoon289@naver.com</li>
-           			  <h3><strong> copyright &copy; BANG Right Reserved</strong></h3>
-                    </ul>
+                    <p>불편 피드백은 메일로 주세요 <br>jihoon289@naver.com</p>
+           			  <h5><strong> CopyRight &copy; OWL Right Reserved</strong></h5>
+           			  <br><br>
                 </div>
             </div>
         </div>
