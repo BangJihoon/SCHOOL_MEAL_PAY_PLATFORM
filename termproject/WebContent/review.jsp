@@ -1,4 +1,5 @@
 <!-- 사용자-메인 -->
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
@@ -6,11 +7,14 @@
 <%@ page import="menu.MenuDAO" %>
 <%@ page import="user.UserDTO" %>
 <%@ page import="menu.MenuDTO" %>
+<%@ page import="review.ReviewDAO" %>
+<%@ page import="review.ReviewDTO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.GregorianCalendar" %>
 <%@ page import="java.util.Calendar" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
 <head> 
@@ -30,15 +34,38 @@ color:#000000;
 }
 </style>
 </head>
-<body> 		
+<body style="background:rgba(71, 99, 255, 0.1);"> 		
 	<%
-		// 로그인이 된 정보 담기
-		String userID = null;
-		UserDTO userDTO = new UserDTO();
-		// 세션이 존재하면 아이디값을 받아 관리
-		if(session.getAttribute("userID") != null) {
-			userID = (String) session.getAttribute("userID");	
+	request.setCharacterEncoding("UTF-8");
+	String storeID = "전체";
+	String searchType = "최신순";
+	String search= "";
+	int pageNumber = 0;
+	if(request.getParameter("storeID")!=null){
+		storeID = request.getParameter("storeID");
+	}
+	if(request.getParameter("searchType")!=null){
+		searchType = request.getParameter("searchType");
+	}
+	if(request.getParameter("search")!=null){
+		search = request.getParameter("search");
+	}
+	if(request.getParameter("pageNumber")!=null){
+		try{
+			pageNumber = Integer.parseInt(request.getParameter("pageNumber"));
+		}catch(Exception e){
+			System.out.println("검색페이지 번호오류");
 		}
+	}
+
+
+	// 로그인이 된 정보 담기
+	String userID = null;
+	UserDTO userDTO = new UserDTO();
+	// 세션이 존재하면 아이디값을 받아 관리
+	if(session.getAttribute("userID") != null) {
+		userID = (String) session.getAttribute("userID");	
+	}
 	%>
 <!--   네비게이션바     -->
 
@@ -51,7 +78,7 @@ color:#000000;
 		
 		<div id="navbar1" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">	
-	  			<li class="nav-item active"> 
+	  			<li> 
 	  				<a class="nav-link" id="navfont" href="index.jsp">메 인</a>
 	  			</li>
 	  			
@@ -74,19 +101,16 @@ color:#000000;
 					</div>
 				</li>
 	  			
-	  			<li> 
-	  				<a class="nav-link" id="navfont" href="index.jsp">후 기</a>
+	  			<li class="nav-item active"> 
+	  				<a class="nav-link" id="navfont" href="review.jsp">후 기</a>
 	  			</li>
 			</ul>
-			<form class="form-inline my-2 ">
-				<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요" aria-label="search">
-			 	<button class="btn btn-outline-success my-2 mt-sm-0 type="submit">검색</button>
-			</form>
+			
 			<% 	
 		 	if(userID!=null){				
 			%>
 			<ul class="nav navbar-nav navbar-right">	
-				<li><a class="dropdown-item" href="#">MyPage</a></li>		
+				<li><a class="dropdown-item" href="myPage.jsp"><%=userID%>'s 식권</a></li>		
 				<li><a class="dropdown-item" href="logoutAction.jsp">Logout</a></li>		
 			</ul>
  			<%
@@ -106,85 +130,118 @@ color:#000000;
 
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 게시판 시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->			
 	
-	<div class="building">
-		<p id=buildingTitle>Review 게시판</p>
-		<section>
+	<div style="margin:30px;">
+		<p id=buildingTitle>REVIEW 게시판</p>
+		<section>				
 			<form method="get" action="review.jsp" class="form-inline mt-3">
-				<select name="menuDivide" class="form-control mx-1 mt-2">
-					<option value="한림관">한림관</option>
-					<option value="북악관">북악관</option>
-					<option value="청운관">청운관</option>
+				<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" data-target=".bd-example-modal-lg" 
+				href="#registerModal" style="width:200px;"> 리뷰 쓰기 </a>
+				<select name="storeID" class="form-control mx-1 mt-2">
+					<option value="전체">전체</option>
+					<option value="한림관" <%if(storeID.equals("한림관")) out.println("selected");%> >한림관</option>
+					<option value="북악관" <%if(storeID.equals("북악관")) out.println("selected");%> >북악관</option>
+					<option value="청운관" <%if(storeID.equals("청운관")) out.println("selected");%> >청운관</option>
+				</select>
+				<select name="searchType" class="form-control mx-1 mt-2">
+					<option value="최신순" <%if(searchType.equals("최신순")) out.println("selected");%>>최신순</option>
+					<option value="추천순" <%if(searchType.equals("추천순")) out.println("selected");%> >추천순</option>				
 				</select>
 				<input type="text" name="search" class="form-control mx-1 mt-2" placeholder="내용을 입력하세요">
-				<button type="submit" class="btn btn-primary mx-1 mt-2">검색</button>
-				<a class="btn btn-primary mx-1 mt-2" data-toggle="modal" data-target=".bd-example-modal-lg" href="#registerModal">등록하기</a>
-				<a class="btn btn-danger mx-1 mt-2" data-toggle="modal" href="#reportModal">신고</a>		
+				<button type="submit" class="btn btn-outline-success mx-1 mt-2">검색</button>
+				
 			</form>
 		</section>
-	
 	</div>	
 		
-
+		<%
+		DecimalFormat format = new DecimalFormat("0.00");
+		
+		ArrayList<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
+		reviewList = new ReviewDAO().getList(storeID, searchType, search, pageNumber);
+		if(reviewList !=null)
+			for(int i=0; i<reviewList.size();i++){
+				if(i==5) break;
+				ReviewDTO review = reviewList.get(i);
+			
+		%>
+		
 <!-- 리뷰게시판      ㅡㅡ -->	
-	<div class="bbs">	
+<div style="margin:30px;">	
+	
 		<div class="card bg-light mt-3">
 			<div class="card-header bg-light">
 				<div class="row">
-					<div class="col-8 text-left"><span class="bbsHeader">한림관&nbsp<small>특식</small></span></div>
-					<div class="col-4 text-right">										
-						종합 <span style="color:red;"> 5 </span> 점
-						<button class="btn " onClick="return confirm('삭제 하시겠습니까?')" href="deleteAction.jsp?reviewID=">삭제</button>
+					<div class="col-4 text-left mt-3">  
+						<h5><%=review.getReviewTitle()%></h5>
+					</div>
+					<div class="col-8 text-right">
+						[ 장소 : <b><%=review.getStoreID()%>&nbsp</b>
+						    메뉴 : <b><%=review.getMenuName()%></b>		]						
+						작성자 :<b><%=review.getUserID()%>님 &nbsp </b>
+						<b>종합 <span style="color:red;"><%=format.format(review.getAvgScore())%> </span> 점</b>
+						<a class="btn btn-default " onClick="return confirm('삭제 하시겠습니까?')" href="./deleteAction.jsp?reviewID=<%=review.getReviewID()%>">삭제</a>
 					</div>
 				</div>
 			</div>
 			<div class="card-body">
-				<h5 class="card-title"> 오늘 치킨까스진짜 	</h5>
-				<p class="card-text">진짜 바삭하고 맛있었음, 근데 양이 조금 아쉬워요ㅠㅠ</p>
+				
+				<p class="card-text"><%=review.getReviewContent()%></p>
 				<div class="row">
-					<div class="col-10 text-left">
-						맛<span style="color:red;">5</span>점
-						위생<span style="color:red;">5</span>점
-						서비스<span style="color:red;">5</span>점
+					<div class="col-6 text-left">
+						맛<span style="color:red;"><%=review.getScore1()%></span>점
+						위생<span style="color:red;"><%=review.getScore2()%></span>점
+						서비스<span style="color:red;"><%=review.getScore3()%></span>점
 					</div>
-					<div class="col-2 text-right">		
-						<span  style="color:green; text-align: left;">추천 15</span>점
-						<button class="btn btn-success" onClick="return confirm('공감 하시겠습니까?')" href="likeAction.jsp?reviewID=">공감</button>
+					<div class="col-6 text-right">		
+						<span  style="color:green; text-align: left;"><b>추천 <%=review.getLikeCount()%>&nbsp</b></span>
+						<a class="btn btn-success"  href="./likeAction.jsp?reviewID=<%=review.getReviewID()%>">공감</a>
+						<a class="btn btn-danger" data-toggle="modal" href="#reportModal">신고</a>		
+					
 					</div>
 				</div>
 			</div>			
 		</div>
-				<div class="card bg-light mt-3">
-			<div class="card-header bg-light">
-				<div class="row">
-					<div class="col-8 text-left"><span class="bbsHeader">한림관&nbsp<small>특식</small></span></div>
-					<div class="col-4 text-right">										
-						종합 <span style="color:red;"> 5 </span> 점
-						<button class="btn " onClick="return confirm('삭제 하시겠습니까?')" href="deleteAction.jsp?reviewID=">삭제</button>
-					</div>
-				</div>
-			</div>
-			<div class="card-body">
-				<h5 class="card-title"> 오늘 치킨까스진짜 	</h5>
-				<p class="card-text">진짜 바삭하고 맛있었음, 근데 양이 조금 아쉬워요ㅠㅠ</p>
-				<div class="row">
-					<div class="col-10 text-left">
-						맛<span style="color:red;">5</span>점
-						위생<span style="color:red;">5</span>점
-						서비스<span style="color:red;">5</span>점
-					</div>
-					<div class="col-2 text-right">		
-						<span  style="color:green; text-align: left;">추천 15</span>점
-						<button class="btn btn-success" onClick="return confirm('공감 하시겠습니까?')" href="likeAction.jsp?reviewID=">공감</button>
-					</div>
-				</div>
-			</div>			
-		</div>
-
-
+</div>
 		
+		<%
+			}	
+		%>
 		
-	</div>
+<!-- 페이지 네이션 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+	<ul class="pagination pagination-lg justify-content-center mt-3">
+		<li class="page-item">
+		<%
+			if(pageNumber <=0){
+		%>	
+			<a class="page-link disabled">Previous</a>	
+		<%
+			} else{
+		%>
+			<a class="page-link" href="review.jsp?storeID=<%=URLEncoder.encode(storeID,"UTF-8")%>&searchType=
+			<%=URLEncoder.encode(searchType,"UTF-8")%>&search=<%=URLEncoder.encode(search,"UTF-8")%>&pageNumber=<%=pageNumber - 1%>">Previous
+			</a>
+		<%
+			}
+		%>
+		</li>
+		<li>
+		<%
+			if(reviewList.size() < 6){
+		%>	
+			<a class="page-link disabled">Next</a>	
+		<%
+			} else{
+		%>
+			<a class="page-link" href="review.jsp?storeID=<%=URLEncoder.encode(storeID,"UTF-8")%>&searchType=
+			<%=URLEncoder.encode(searchType,"UTF-8")%>&search=<%=URLEncoder.encode(search,"UTF-8")%>&pageNumber=
+			<%=pageNumber + 1 %>">Next</a>
+		<%
+			}
+		%>
+		</li>
+	</ul>
 		
+	
 <!-- 등록 모달창  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->		
 
 		<div class="modal fade bd-example-modal-lg" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -205,6 +262,7 @@ color:#000000;
 								<div class="form-group col-sm-6">
 									<label>장 소</label>
 									<select name="storeID" class="form-control" >
+										<option value="" selectde>장소를 선택해주세요</option>
 										<option value="한림관">한림관</option>
 										<option value="북악관">북악관</option>
 										<option value="청운관">청운관</option>
@@ -260,7 +318,7 @@ color:#000000;
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-								<button type="submit" class="btn btn-primary" data-dismiss="modal">등록하기</button>
+								<button type="submit" class="btn btn-primary">등록하기</button>
 							</div>
 						</form>
 						
@@ -285,10 +343,11 @@ color:#000000;
 					</div>
 				<!-- 신고 모달 바디ㅡㅡ -->				
 					<div class="modal-body">
-						<form action="report`.jsp" method="post">	
+						<form action="reportAction.jsp" method="post">	
+							<input type="hidden" name="reviewID" class="form-control" maxlength="40">
 							<div class="form-group">
 								<label>신고 제목</label>
-								<input type="text" name="reportTime" class="form-control" maxlength="40">
+								<input type="text" name="reportTitle" class="form-control" maxlength="40">
 							</div>
 							<div class="form-group">
 								<label>신고 내용</label>
@@ -296,7 +355,7 @@ color:#000000;
 							</div>						
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-								<button type="submit" class="btn btn-danger" data-dismiss="modal">신고하기</button>
+								<button type="submit" class="btn btn-danger" >신고하기</button>
 							</div>
 						</form>				
 					</div>					

@@ -20,7 +20,7 @@ color:#000000;
 }
 </style>
 </head>
-<body>
+<body style="background:rgba(255, 99, 30, 0.1);">
 	<%
 		// 로그인이 된 정보 담기
 		String userID = null;
@@ -60,23 +60,26 @@ color:#000000;
 					</div>
 				</li>
 				
-	  			<li> 
-	  				<a class="nav-link" id="navfont" href="index.jsp">카 페</a>
-	  			</li>
+	  			<li class="nav-item dropdown"> 
+					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 카 페 </a>
+					<div class="dropdown-menu" aria-labelledby="dropdown">
+						<a class="dropdown-item"  id="navfont" href="#">Olive Green</a>
+						<a class="dropdown-item" id="navfont"  href="#">Cafe SP</a>
+						<a class="dropdown-item"  id="navfont" href="#">Cafe SB</a>
+						<a class="dropdown-item"  id="navfont" href="#">Laural</a>
+					</div>
+				</li>
 	  			
 	  			<li> 
-	  				<a class="nav-link" id="navfont" href="index.jsp">결 제</a>
+	  				<a class="nav-link" id="navfont" href="review.jsp">후 기</a>
 	  			</li>
 			</ul>
-			<form class="form-inline my-2 ">
-				<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요" aria-label="search">
-			 	<button class="btn btn-outline-success my-2 mt-sm-0 type="submit">검색</button>
-			</form>
+		
 			<% 	
 		 	if(userID!=null){				
 			%>
 			<ul class="nav navbar-nav navbar-right">	
-				<li><a class="dropdown-item" href="#">MyPage</a></li>		
+				<li><a class="dropdown-item" href="#">My Ticket</a></li>		
 				<li><a class="dropdown-item" href="logoutAction.jsp">Logout</a></li>		
 			</ul>
  			<%
@@ -116,14 +119,14 @@ color:#000000;
 				 </div>
 
 <!--   footer    -->
-    <footer style="background-color: skyblue; color:black;">
+    <footer  style="background-color: skyblue;color:black;">
+    
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-lg-offset-1 text-center COLSPAN=5 ALIGN=center">
                     <br>
                     <p>불편 피드백은 메일로 주세요 <br>jihoon289@naver.com</p>
            			  <h5><strong> CopyRight &copy; OWL Right Reserved</strong></h5>
-           			  <br><br>
                 </div>
             </div>
         </div>

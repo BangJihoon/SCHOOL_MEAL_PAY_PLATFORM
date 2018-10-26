@@ -4,9 +4,6 @@
 <%@ page import = "java.io.PrintWriter" %>
 <% request.setCharacterEncoding("UTF-8"); %>
 
-<jsp:useBean id="user" class="user.UserDTO" scope="page" />
-<jsp:setProperty name="user" property="userID" />
-<jsp:setProperty name="user" property="userPW" />
 
 <!DOCTYPE html>
 <html>
@@ -16,8 +13,10 @@
 <body>
 	<%
 		String userID = null;
+		String userPW = null;
 		if(session.getAttribute("userID")!=null){
 			userID = (String) session.getAttribute("userID");
+			
 		}
 		if(userID !=null){
 			PrintWriter script = response.getWriter();
@@ -26,11 +25,39 @@
 			script.println("location.href = 'index.jsp'");
 			script.println("</script>");			
 		} 
+		
+
+		if(request.getParameter("userID")!=null){
+			userID =request.getParameter("userID");
+		}
+		if(request.getParameter("userPW")!=null){
+			userPW =request.getParameter("userPW");
+		}		
+		
+		if(userID==null ||userID.equals("")){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('아이디를 입력하세요')");
+			script.println("history.back()");
+			script.println("</script>");
+			script.close();
+			return;
+		}
+		if(userPW==null||userPW.equals("")){
+			PrintWriter script = response.getWriter();
+			script.println("<script>");
+			script.println("alert('비밀번호를 입력해주세요.')");
+			script.println("history.back()");
+			script.println("</script>");
+			script.close();
+			return;
+		}
+		
 		UserDAO userDAO = new UserDAO();
-		int result = userDAO.login(user.getUserID(), user.getUserPW());
+		int result = userDAO.login(userID,userPW);
 		
 		if (result ==1){ // 로그인 성공 시
-			session.setAttribute("userID",user.getUserID());
+			session.setAttribute("userID",userID);
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("location.href = 'index.jsp'");

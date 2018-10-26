@@ -71,6 +71,7 @@ html,body{
 	background-repeat: no-repeat;
 	max-width: 100%;
 	max-height: 100%;
+	padding:20%;
 	padding-top: 60px;
 	padding-bottom: 60px;
 }
@@ -108,17 +109,9 @@ html,body{
 
 .building{
 	margin:30px;
-	font-size:2em;
-}
-.bbs{
-	margin:30px;
-	weight:90%;
-}
-.bbsHeader{
-	color:deepblue;
-	font-weight: bold;
 	font-size:1.5em;
 }
+
 .menu{
 	text-align: center;
 	weight:100%;
@@ -181,17 +174,11 @@ label.__checkboxArea.active{
 } 
 
 
-.purchase{
-	font-size: 1.5em;
-	text-align: center;
-	width: 90%;
-}
 
 /*----------------- 식 권  테이블 -----------------*/
 
 .ticket{
 	border-collapse: collapse;
-	font-size: 1.5em; 
 	width: 100%;
     height: 200px;
 }
@@ -199,17 +186,16 @@ label.__checkboxArea.active{
 	text-align: center;
 	border-bottom: 3px solid #168;
 	padding: 10px;
-	font-weight: bolder;
 	font-family: 'Do Hyeon', sans-serif;
 }
 .ticket td {
-  color: #669;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
+	font-size: 1.2em; 
+	padding: 10px;
+	border-bottom: 1px solid #ddd;
 }
 
 .ticket input[type=checkbox]{ 
-	width:50px; height:50px; margin:0; padding:0;
+	width:30px; height:30px; margin:0; padding:0;
 }
 .ticket input[type=text]{ 
 	width:150px; height:50px;margin:0; padding:0; 
@@ -217,7 +203,7 @@ label.__checkboxArea.active{
 	text-align: center;
 }
 .ticket input[type=button]{ 
-	width:50px; height:50px;margin:0; padding:0; 
+	width:30px; height:30px;margin:0; padding:0; 
 	text-align: center;
 }
 
@@ -244,3 +230,150 @@ textarea.LV_invalid_field:active,
 .fieldWithErrors textarea.LV_invalid_field {
     border: 1px solid #CC0000;
 }
+
+
+/*----------------- 슬라이더  -------------------------------------------------
+#slider-wrapper {
+  width: 100%;
+  height: 470px;
+  margin: 0 auto;
+  position: relative;
+  margin-bottom: 0px;
+  background: rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+.inner-wrapper {
+  width: 100%;
+  height: 470px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-bottom: 0px;
+  overflow: hidden;
+}
+.jumbotron{
+	background-image: url('../img/main.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	text-shadow: blue 0.2em 0.2em 0.2em;
+	color:white;
+	max-width: 100%;
+	max-height: 100%;
+	padding-top: 50px
+}
+#s1 {
+  padding: 6px;
+  background: #000000;
+  position: absolute;
+  left: 50%;
+  bottom: 25px;
+  margin-left: -36px;
+  border-radius: 20px;
+  opacity: 0.3;
+  cursor: pointer;
+  z-index: 999;
+}
+
+#s2 {
+  padding: 6px;
+  background: #000000;
+  position: absolute;
+  left: 50%;
+  bottom: 25px;
+  margin-left: -12px;
+  border-radius: 20px;
+  opacity: 0.3;
+  cursor: pointer;
+  z-index: 999;
+}
+
+#s3 {
+  padding: 6px;
+  background: #000000;
+  position: absolute;
+  left: 50%;
+  bottom: 25px;
+  margin-left: 12px;
+  border-radius: 20px;
+  opacity: 0.3;
+  cursor: pointer;
+  z-index: 999;
+}
+
+#s4 {
+  padding: 6px;
+  background: #000000;
+  position: absolute;
+  left: 50%;
+  bottom: 25px;
+  margin-left: 36px;
+  border-radius: 20px;
+  opacity: 0.3;
+  cursor: pointer;
+  z-index: 999;
+}
+
+#s1:hover,
+#s2:hover,
+#s3:hover,
+#s4:hover {
+  opacity: .50;
+}
+
+
+.control {
+  display: none;
+}
+
+#Slide1:checked ~ .overflow-wrapper {
+  margin-left: 0%;
+}
+
+#Slide2:checked ~ .overflow-wrapper {
+  margin-left: -100%;
+}
+
+#Slide3:checked ~ .overflow-wrapper {
+  margin-left: -200%;
+}
+
+#Slide4:checked ~ .overflow-wrapper {
+  margin-left: -300%;
+}
+
+#Slide1:checked + #s1 {
+  opacity: 1;
+}
+
+#Slide2:checked + #s2 {
+  opacity: 1;
+}
+
+#Slide3:checked + #s3 {
+  opacity: 1;
+}
+
+#Slide4:checked + #s4 {
+  opacity: 1;
+}
+
+.overflow-wrapper {
+  width: 400%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow-y: hidden;
+  z-index: 1;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.slide img {
+  width: 25%;
+  float: left;
+}
+
+*/

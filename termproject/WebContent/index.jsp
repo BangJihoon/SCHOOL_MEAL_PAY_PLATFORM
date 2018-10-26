@@ -1,7 +1,5 @@
 <!-- 사용자-메인 -->
-<%@page import="menu.MenuDAO"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="user.UserDAO" %>
@@ -17,11 +15,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/custom.css">
-	<link rel="stylesheet" href="css/clock.css" >
+	<link rel="stylesheet" href="css/clock.css" >  
+	
+	
+	
 	
 	<TITLE>SKU_Bab- 학식결제,식권관리</TITLE>
-
 </head>
+
 <body>
 	<%
 	// 로그인이 된 정보 담기
@@ -60,10 +61,10 @@
 	  			<li class="nav-item dropdown"> 
 					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 카 페 </a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-						<a class="dropdown-item"  id="navfont" href="buildingH.jsp">Olive Green</a>
-						<a class="dropdown-item" id="navfont"  href="buildingB.jsp">Cafe SP</a>
-						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">Cafe SB</a>
-						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">Laural</a>
+						<a class="dropdown-item"  id="navfont" href="#">Olive Green</a>
+						<a class="dropdown-item" id="navfont"  href="#">Cafe SP</a>
+						<a class="dropdown-item"  id="navfont" href="#">Cafe SB</a>
+						<a class="dropdown-item"  id="navfont" href="#">Laural</a>
 					</div>
 				</li>
 	  			
@@ -71,19 +72,16 @@
 	  				<a class="nav-link" id="navfont" href="review.jsp">후 기</a>
 	  			</li>
 			</ul>
-			<form class="form-inline my-2 ">
-				<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요" aria-label="search">
-			 	<button class="btn btn-outline-success my-2 mt-sm-0 type="submit">검색</button>
-			</form>
+		
 			<% 	
 		 	if(userID!=null){				
 			%>
 			<ul class="nav navbar-nav navbar-right">	
-				<li><a class="dropdown-item" href="#">My Ticket</a></li>		
+				<li><a class="dropdown-item" href="myPage.jsp">My Ticket</a></li>		
 				<li><a class="dropdown-item" href="logoutAction.jsp">Logout</a></li>		
 			</ul>
  			<%
-		 	}else if(userID ==null){
+		 	}else if(userID == null){
 		 	%>
 			<ul class="nav navbar-nav navbar-right">					
 				<li><a class="nav-link" href="join.jsp">Join</a></li>
@@ -97,10 +95,72 @@
 	</nav>
  
 <!-- 본문 -->
+	
+<!-- 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+	<style>
+	/* Make the image fully responsive */
+	.carousel-inner img {
+	    width: 100%;
+	    height: 100%;
+	}
+	</style>
+	
+	<div id="demo" class="carousel slide" data-ride="carousel">
 
- 	
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+  
+	<div class="carousel-inner">
+	  <div class="carousel-item active">
+	    <img src="img/main.jpg" alt="Los Angeles" width="1100" height="500">
+	  </div>
+	  <div class="carousel-item">
+	    <img src="img/logo4.jpg" alt="Chicago" width="1100" height="500">
+	  </div>
+	  <div class="carousel-item">
+	    <img src="img/logo.jpg" alt="New York" width="1100" height="500">
+	  </div>
+	</div>
+	
+	  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+	    <span class="carousel-control-prev-icon"></span>
+	  </a>
+	  <a class="carousel-control-next" href="#demo" data-slide="next">
+	    <span class="carousel-control-next-icon"></span>
+	  </a>
+	</div>
+-->
+
+
+<!--  여기부터  이미지 슬라이드 
+<div id="slider-wrapper">
+  <div class="inner-wrapper">
+    <input checked type="radio" name="slide" class="control" id="Slide1" />
+    <label for="Slide1" id="s1"></label>
+    <input type="radio" name="slide" class="control" id="Slide2" />
+    <label for="Slide2" id="s2"></label>
+    <input type="radio" name="slide" class="control" id="Slide3" />
+    <label for="Slide3" id="s3"></label>
+    <input type="radio" name="slide" class="control" id="Slide4" />
+    <label for="Slide4" id="s4"></label>
+    <div class="overflow-wrapper">
+      <a class="slide" href=""><img src="./img/main.jpg" /></a>
+      <a class="slide" href=""><img src="./img/1.jpg" /></a>
+      <a class="slide" href=""><img src="./img/2.jpg" /></a>
+      <a class="slide" href=""><img src="./img/main.jpg" /></a>
+    </div>
+  </div>
+</div>-->
  <!-- ㅡㅡㅡㅡ 메인 점보트론 사진 ㅡㅡㅡㅡㅡㅡ  -->
  
+
 	<div class="container-fluid">
 		<div class="jumbotron">
 			<h1 class="text-center" style="font-size:80;">서경대학교 학식</h1><br>
@@ -109,6 +169,8 @@
 			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 	</div>
+	
+	
 				<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ 전자시계 ㅡㅡㅡㅡㅡㅡㅡㅡ -->	
 					<div class="col-6 offset-3" style="align-content:center;">
 						<div id="clock" class="light">
@@ -125,12 +187,11 @@
 						<script src="js/jquery.digitalclock.js"></script>
 				<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ 전자시계 ㅡㅡㅡㅡㅡㅡㅡㅡ -->		
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메뉴시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->	
-
 <div class="form-inline">				
-	<div class="col-lg-10 offset-1">	
-	<div class="todayMenu">
-			
-		<div class="todayHead">
+	<div class="container">
+
+<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 오늘 날짜 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->	
+		<div class="todayHead" style="text-align: center">
 			<h1>Today</h1><h2>
 				<script>
 				  wkday = ["일","월","화","수","목","금","토"];
@@ -147,15 +208,20 @@
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ한림관ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
 		<div class="building">
 			<a href="buildingH.jsp">
-				<p id=buildingTitle>한 림 관</p>
+				<p id=buildingTitle style="border-style: outset;">
+				한 림 관</p>
 			</a>
 			<div class="form-inline">
 				<%
-					MenuDAO menuDAO = new MenuDAO();
 					Date date = new Date();	//오늘날짜 받기
 					String today = new SimpleDateFormat("yyyy-MM-dd").format(date);	//String  형식으로 변환
-					ArrayList<MenuDTO> list = menuDAO.getTodayMenu("buildingH",today);	//넣어줌
 					
+
+					MenuDAO menuDAO = new MenuDAO();
+					ArrayList<MenuDTO> list = new ArrayList<MenuDTO>();
+					list = menuDAO.getTodayMenu("buildingH",today);	//넣어줌
+					
+				
 					for(int i=0;i<list.size();i++){
 				%>					
 				<div class="col-lg-4">
@@ -169,16 +235,25 @@
 				</div>
 				<%
 				}
+				if(list.size() ==0){					
 				%>
-
+				<div class="col-lg-12">
+					<div class="menu">
+						<p id=menuTitle><%out.print("오늘 메뉴가 등록되지 않았습니다");%></p>						
+						<p id=menuPrice><%out.print("조금만 기다려 주세요");%></p>						
+					</div>
+				</div>
+				<%
+				}
+				%>
 			</div>
 			
+			
 		</div>
-		<img src="img/outline.jpg" width=100% height=80px>
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 북악관 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->			
 	<div class="building">
 		<a href="buildingB.jsp">
-			<p id=buildingTitle>북 악 관</p>
+			<p id=buildingTitle style="border-style: outset;">북 악 관</p>
 		</a>
 			<div class="form-inline">
 				<%
@@ -196,15 +271,23 @@
 				</div>
 				<%
 				}
+				if(list.size() ==0){					
 				%>
-
+				<div class="col-lg-12">
+					<div class="menu">
+						<p id=menuTitle><%out.print("오늘 메뉴가 등록되지 않았습니다");%></p>						
+						<p id=menuPrice><%out.print("조금만 기다려 주세요");%></p>						
+					</div>
+				</div>
+				<%
+				}
+				%>
 			</div>
 		</div>
-		<img src="img/outline.jpg" width=100% height=80px>
 	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 청운관 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->			
 		<div class="building">
 		<a href="buildingC.jsp">
-			<p id=buildingTitle>청 운 관</p>
+			<p id=buildingTitle style="border-style: outset;">청 운 관</p>
 		</a>	
 			<div class="form-inline">
 				<%
@@ -221,16 +304,24 @@
 					</div>
 				</div>
 				<%
-				}	
+				}
+				if(list.size() ==0){					
+				%>
+				<div class="col-lg-12">
+					<div class="menu">
+						<p id=menuTitle><%out.print("오늘 메뉴가 등록되지 않았습니다");%></p>						
+						<p id=menuPrice><%out.print("조금만 기다려 주세요");%></p>						
+					</div>
+				</div>
+				<%
+				}
 				%>
 
 			</div>
 		</div>
-	</div>
-</div></div>
+	</div></div>
  <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메 뉴 끝 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->		   
-    
-		<img src="img/outline.gif" width=100%>
+
 <!--   footer    -->
     <footer style="background-color: skyblue; color:black;">
         <div class="container">
@@ -244,6 +335,7 @@
             </div>
         </div>
     </footer>
+    
 <!-- 애니메이션 참조 -->
 
 	<script src="js/jquery-1.11.1.min.js"></script> 

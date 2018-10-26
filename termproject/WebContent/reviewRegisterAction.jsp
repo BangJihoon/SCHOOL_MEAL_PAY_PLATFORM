@@ -30,7 +30,7 @@
 		int score1=0;
 		int score2=0;
 		int score3=0;
-		float avgScore=0;
+		float avgScore = 0;
 		
 		if(request.getParameter("storeID")!=null){
 			storeID =request.getParameter("storeID");
@@ -66,11 +66,11 @@
 			}
 		}
 		if(score1!=0 || score2!=0 || score3!=0){
-			avgScore = (score1 + score2 + score3)/3;
+			avgScore = (float)(score1 + score2 + score3) / 3;
 		}
 		
 		if(storeID==null ||menuName==null ||reviewTitle==null ||reviewContent==null ||score1==0 ||score2==0 ||score3==0 ||
-				avgScore==0 || reviewTitle.equals("") || reviewContent.equals("")){
+				avgScore==0 || reviewTitle.equals("") || reviewContent.equals("")||storeID.equals("")||menuName.equals("")){
 			PrintWriter script = response.getWriter();
 			script.println("<script>");
 			script.println("alert('입력이 안 된 사항이 있습니다.')");

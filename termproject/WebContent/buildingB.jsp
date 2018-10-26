@@ -2,11 +2,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<%@ page import="user.*" %>
+<%@ page import="user.UserDAO" %>
+<%@ page import="menu.MenuDAO" %>
+<%@ page import="user.UserDTO" %>
+<%@ page import="menu.MenuDTO" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.GregorianCalendar" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 <head> 
-	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META NAME="viewpoint" CONTENT="width=device-width, initial-scale=1,shrink-to-fit=no">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -22,17 +29,15 @@ color:#000000;
 }
 </style>
 </head>
-<body  onload="init(); enable_text(false);"> 
+<body  onload="init(); enable_text(false); t2_enable_text(false); t3_enable_text(false);"> 		<!--init()함수 로드, 사용상태를 불능 초기화 -->
 	<%
 		// 로그인이 된 정보 담기
 		String userID = null;
-		String name= null;
 		UserDTO userDTO = new UserDTO();
 		// 세션이 존재하면 아이디값을 받아 관리
 		if(session.getAttribute("userID") != null) {
 			userID = (String) session.getAttribute("userID");	
 		}
-		
 	%>
 <!--   네비게이션바     -->
 
@@ -45,36 +50,39 @@ color:#000000;
 		
 		<div id="navbar1" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">	
-	  			<li class="nav-item active"> 
+	  			<li class="nav-item "> 
 	  				<a class="nav-link" id="navfont" href="index.jsp">메 인</a>
 	  			</li>
 	  			
-				<li class="nav-item dropdown"> 
+				<li class="nav-item dropdown active"> 
 					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 식 당 </a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-						<a class="dropdown-item"  id="navfont" href="buildingH.jsp">한림관</a>
+						<a class="dropdown-item "  id="navfont" href="buildingH.jsp">한림관</a>
 						<a class="dropdown-item" id="navfont"  href="buildingB.jsp">북악관</a>
 						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">청운관</a>
 					</div>
 				</li>
 				
-	  			<li> 
-	  				<a class="nav-link" id="navfont" href="index.jsp">카 페</a>
-	  			</li>
+	  			<li class="nav-item dropdown "> 
+					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 카 페 </a>
+					<div class="dropdown-menu" aria-labelledby="dropdown">
+						<a class="dropdown-item"  id="navfont" href="#">Olive Green</a>
+						<a class="dropdown-item" id="navfont"  href="#">Cafe SP</a>
+						<a class="dropdown-item"  id="navfont" href="#">Cafe SB</a>
+						<a class="dropdown-item"  id="navfont" href="#">Laural</a>
+					</div>
+				</li>
 	  			
 	  			<li> 
-	  				<a class="nav-link" id="navfont" href="index.jsp">결 제</a>
+	  				<a class="nav-link" id="navfont" href="review.jsp">후 기</a>
 	  			</li>
 			</ul>
-			<form class="form-inline my-2 ">
-				<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요" aria-label="search">
-			 	<button class="btn btn-outline-success my-2 mt-sm-0 type="submit">검색</button>
-			</form>
+			
 			<% 	
 		 	if(userID!=null){				
 			%>
 			<ul class="nav navbar-nav navbar-right">	
-				<li><a class="dropdown-item" href="#">MyPage</a></li>		
+				<li><a class="dropdown-item" href="myPage.jsp">MyPage</a></li>		
 				<li><a class="dropdown-item" href="logoutAction.jsp">Logout</a></li>		
 			</ul>
  			<%
@@ -90,277 +98,453 @@ color:#000000;
 			
 		</div>
 	</nav>
- 
-<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ  J  s    ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
- 
- <script language="JavaScript">
- 
- //식권 ------------------------
- 
-  	 $(document).ready(function(){
-  		    $('.__count_range input[count_range]').click(function(e){
-  		        e.preventDefault();
-  		        var type = $(this).attr('count_range');
-  		        var $count = $(this).parent().children('input.count');
-  		        var count_val = $count.val(); // min 1
-  		        if(type=='m'){
-  		            if(count_val<1){
-  		                return;
-  		            }
-  		            $count.val(parseInt(count_val)-1);
-  		        }else if(type=='p'){
-  		            $count.val(parseInt(count_val)+1);
-  		        }
-  		    });
-  		});
-  	 
-//checkbox style
-  	function input_checked(obj,el_class){
-  		if(obj.is(':checked')==true){
-  			obj.parent('label'+el_class).addClass('active');
-  		}else{
-  			obj.parent('label'+el_class).removeClass('active');
-  		}
-  	}
-  	function checkbox_change(obj){
-  		if(obj=='load'){
-  			$('input[type=checkbox]').each(function(){
-  				input_checked($(this),'.__checkboxArea');
-  			});
-  		}else{
-  			input_checked(obj,'.__checkboxArea');
-  		}
-  	}
-  	$(document).ready(function(){
-  		$('input[type=checkbox]').change(function(){
-  			checkbox_change($(this));
-  		});
-  		checkbox_change('load');
-  	});
+
+
+<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메뉴시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->			
+	
+			<div class="building">
+		<div class="todayMenu">
+		<div class="card text-center">
+			  <div class="card-header">
+				<p id=buildingTitle>북 악 관</p>
+			  </div>
+			  <div class="card-body">
+			  
+			   <h5 class="card-title">
+				  	<script>
+						  function getWeekOfMonth(date) {		// 오늘이 몇주차 인지 구하는함수
+						     var selectedDayOfMonth = date.getDate();	
+						     var first = new Date(date.getFullYear() + '/' + (date.getMonth() + 1) + '/01');	//이달의 첫날 변수
+						     var monthFirstDateDay = first.getDay();		//이달의 첫날이 무슨요일인지 구함					     
+						     return Math.ceil((selectedDayOfMonth + monthFirstDateDay) / 7); 
+						 }
+						  
+						  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째"];
+						  today = new Date(); 
+						  weekperiod = (today.getDate())-(today.getDay()-1);
+						  document.write(today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br>");
+						  document.write("<h3>[",weekperiod,"일 ~ ",weekperiod+4,"일]</h3>"); //그주에 월~금 날짜를 출력하길바람 0~5
+					</script>
+					<button class="btn btn-primary" onclick='location.href="menuManage.jsp?storeID=buildingB"'>식단 관리</button>
+				</h5>
+			  </div>
+			  <div class="card-footer text-muted">
+			    
+			  </div>
+		</div>
+				
+				
+				<%	
+					Calendar firstDayOfWeek = new GregorianCalendar();
+					Date date = new Date();	//오늘날짜 받기
+					int dday = date.getDay();
+					firstDayOfWeek.add(Calendar.DATE, -dday+1);
+					
+					String today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());	//String  형식으로 변환
+					
+					MenuDAO menuDAO = new MenuDAO();
+					ArrayList<MenuDTO> list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
+					
+				%>
+				
+				<div class="form-inline">				
+					<div class="col-lg-2 offset-1">					
+						<p id=weekmenuTitle>월</p>
+						<%
+						for(int i=0;i<list.size();i++){							
+						%>							
+						<div class="weekmenu">
+							<div style="min-height:220px;">	
+								<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+								<p><%=list.get(i).getSide1()%></p>
+								<p><%=list.get(i).getSide2()%></p>
+								<p><%=list.get(i).getSide3()%></p>
+								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+							</div>
+						</div>	
+						<%
+						}
+						if(list.size() ==0){					
+						%>
+						<div class="col-lg-12">
+							<div class="menu">
+								<p id=menuTitle><%out.print("오늘 메뉴");%></p>						
+								<p id=menuPrice><%out.print("미등록");%></p>						
+							</div>
+						</div>
+						<%
+						}
+						%>
+						
+					</div>
+					
+					<div class="col-lg-2 ">					
+						<p id=weekmenuTitle>화</p>
+							<%
+							firstDayOfWeek.add(Calendar.DATE,1);
+							today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
+							list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
+							for(int i=0;i<list.size();i++){							
+							%>							
+							<div class="weekmenu">
+								<div style="min-height:220px;">			
+									<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+									<p><%=list.get(i).getSide1()%></p>
+									<p><%=list.get(i).getSide2()%></p>
+									<p><%=list.get(i).getSide3()%></p>
+									<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+								</div>
+							</div>	
+							<%
+							}
+							if(list.size() ==0){					
+							%>
+							<div class="col-lg-12">
+								<div class="menu">
+									<p id=menuTitle><%out.print("궁금 하지?");%></p>						
+									<p id=menuPrice><%out.print("좀만 참자");%></p>						
+								</div>
+							</div>
+							<%
+							}
+							%>
+					</div>
+					
+					<div class="col-lg-2 ">					
+						<p id=weekmenuTitle>수</p>
+						<%
+						firstDayOfWeek.add(Calendar.DATE,1);
+						today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
+						list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
+						for(int i=0;i<list.size();i++){							
+						%>							
+						<div class="weekmenu">
+							<div style="min-height:220px;">				
+								<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+								<p><%=list.get(i).getSide1()%></p>
+								<p><%=list.get(i).getSide2()%></p>
+								<p><%=list.get(i).getSide3()%></p>
+								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+							</div>
+						</div>	
+						<%
+						}
+						if(list.size() ==0){					
+						%>
+						<div class="col-lg-12">
+							<div class="menu">
+								<p id=menuTitle><%out.print("누가제발");%></p>						
+								<p id=menuPrice><%out.print("밥먹을때");%></p>						
+							</div>
+						</div>
+						<%
+						}
+						%>
+					</div>
+					
+					<div class="col-lg-2 ">					
+						<p id=weekmenuTitle>목</p>
+						<%
+						firstDayOfWeek.add(Calendar.DATE,1);
+						today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
+						list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
+						for(int i=0;i<list.size();i++){							
+						%>							
+						<div class="weekmenu">
+							<div style="min-height:220px;">				
+								<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+								<p><%=list.get(i).getSide1()%></p>
+								<p><%=list.get(i).getSide2()%></p>
+								<p><%=list.get(i).getSide3()%></p>
+								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+							</div>
+						</div>	
+						<%
+						}
+						if(list.size() ==0){					
+						%>
+						<div class="col-lg-12">
+							<div class="menu">
+								<p id=menuTitle><%out.print("식당가서");%></p>						
+								<p id=menuPrice><%out.print("말해주라");%></p>						
+							</div>
+						</div>
+						<%
+						}
+						%>
+					</div>
+					
+					<div class="col-lg-2 ">					
+						<p id=weekmenuTitle>금</p>
+						<%
+						firstDayOfWeek.add(Calendar.DATE,1);
+						today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
+						list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
+						for(int i=0;i<list.size();i++){							
+						%>							
+						<div class="weekmenu">
+							<div style="min-height:220px;">				
+								<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+								<p><%=list.get(i).getSide1()%></p>
+								<p><%=list.get(i).getSide2()%></p>
+								<p><%=list.get(i).getSide3()%></p>
+								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+							</div>
+						</div>	
+						<%
+						}
+						if(list.size() ==0){					
+						%>
+						<div class="col-lg-12">
+							<div class="menu">
+								<p id=menuTitle><%out.print("등록아직");%></p>						
+								<p id=menuPrice><%out.print("안됬다고");%></p>						
+							</div>
+						</div>
+						<%
+						}
+						%>
+					</div>					
+				</div>	
+									
+			</div>
+		</div>
+		<br><br><br><br>
+		
+ <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ  J  s    ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+   <script language="JavaScript">
 //----자동계산 시스템 -------------
+		var t1_sell_price;	// 판매가격
+		var t1_amount;		// 수량
+
+		var t2_sell_price;	// 판매가격
+		var t2_amount;		// 수량
+
+		var t3_sell_price;	// 판매가격
+		var t3_amount;		// 수량
+
+		var total_sum;
+// 식권선택	
+		function init() { 
+			t1_sell_price = document.form.t1_sell_price.value;
+			t1_amount = document.form.t1_amount.value;
+
+			t2_sell_price = document.form.t2_sell_price.value;
+			t2_amount = document.form.t2_amount.value;
+
+			t3_sell_price = document.form.t3_sell_price.value;
+			t3_amount = document.form.t3_amount.value;
+
+			total_sum = document.form.total_sum.value;
+		}
+
+//1번째 티켓
 		function enable_text(status)
 		{
-		status=!status; 
-		document.form.amount.disabled = status;
+			if(status<1){	//unchecked 상태일때 수량,금액 초기화
+			document.form.t1_sum.value = 0;
+			document.form.t1_amount.value = 0;
+			total();
+			}
+			status=!status	//상태를 변경시킴(true값이 들어오면 , false값)
+			document.form.t1_amount.disabled = status;	//사용가능여부 바꿔줌
+			document.form.t1_added.disabled = status;	//사용가능여부 바꿔줌
+			document.form.t1_deled.disabled = status;	//사용가능여부 바꿔줌
+		}
+		function add() {
+			t1_hm = document.form.t1_amount;
+			t1_sum = document.form.t1_sum;
+			total_sum = document.form.total_sum;
+			t1_hm.value ++ ;
+			t1_sum.value = commify(parseInt(t1_hm.value) * t1_sell_price);	//합계에 그대로 반환
+			total();
 		}
 		
-		var sell_price;
-		var amount;
-		
-		function init () { 
-			sell_price = document.form.sell_price.value;
-			amount = document.form.amount.value;
-			document.form.sum.value = sell_price;
-			change();
-		}
-		
-		function add () {
-			hm = document.form.amount;
-			sum = document.form.sum;
-			hm.value ++ ;
-		
-			sum.value = parseInt(hm.value) * sell_price;
-		}
-		
-		function del () {
-			hm = document.form.amount;
-			sum = document.form.sum;
-				if (hm.value > 1) {
-					hm.value -- ;
-					sum.value = parseInt(hm.value) * sell_price;
+		function del() {
+			t1_hm = document.form.t1_amount;
+			t1_sum = document.form.t1_sum;
+				if (t1_hm.value >= 1) {
+					t1_hm.value -- ;
+					t1_sum.value = commify(parseInt(t1_hm.value) * t1_sell_price);	//합계에 그대로 반환
 				}
+			total();
+		}
+
+//2번째 티켓
+		
+		function t2_enable_text(status)
+		{
+			if(status<1){	//unchecked 상태일때 수량,금액 초기화
+			document.form.t2_sum.value = 0;
+			document.form.t2_amount.value = 0;
+			total();
+			}
+			status=!status	//상태를 변경시킴(true값이 들어오면 , false값)
+			document.form.t2_amount.disabled = status;	//사용가능여부 바꿔줌
+			document.form.t2_added.disabled = status;	//사용가능여부 바꿔줌
+			document.form.t2_deled.disabled = status;	//사용가능여부 바꿔줌
+		}
+		function t2_add() {
+			t2_hm = document.form.t2_amount;
+			t2_sum = document.form.t2_sum;
+			t2_hm.value ++ ;
+			t2_sum.value = commify(parseInt(t2_hm.value) * t2_sell_price);	//합계에 그대로 반환
+			total();
 		}
 		
-		function change () {
-			hm = document.form.amount;
-			sum = document.form.sum;
-		
-				if (hm.value < 0) {
-					hm.value = 0;
+		function t2_del() {
+			t2_hm = document.form.t2_amount;
+			t2_sum = document.form.t2_sum;
+				if (t2_hm.value >= 1) {
+					t2_hm.value -- ;
+					t2_sum.value = commify(parseInt(t2_hm.value) * t2_sell_price);	//합계에 그대로 반환
 				}
-			sum.value = parseInt(hm.value) * sell_price;
+			total();
 		}
-		function commify(n) { 		//1,000단위 마다 콤마찍는 함수
+//3번째 티켓
+		
+		function t3_enable_text(status)
+		{
+			if(status<1){	//unchecked 상태일때 수량,금액 초기화
+			document.form.t3_sum.value = 0;
+			document.form.t3_amount.value = 0;
+			total();
+			}
+			status=!status	//상태를 변경시킴(true값이 들어오면 , false값)
+			document.form.t3_amount.disabled = status;	//사용가능여부 바꿔줌
+			document.form.t3_added.disabled = status;	//사용가능여부 바꿔줌
+			document.form.t3_deled.disabled = status;	//사용가능여부 바꿔줌
+		}
+		function t3_add() {
+			t3_hm = document.form.t3_amount;
+			t3_sum = document.form.t3_sum;
+			t3_hm.value ++ ;
+			t3_sum.value = commify(parseInt(t3_hm.value) * t3_sell_price);	//합계에 그대로 반환
+			total();
+		}
+		
+		function t3_del() {
+			t3_hm = document.form.t3_amount;
+			t3_sum = document.form.t3_sum;
+				if (t3_hm.value >= 1) {
+					t3_hm.value -- ;
+					t3_sum.value = commify(parseInt(t3_hm.value) * t3_sell_price);	//합계에 그대로 반환
+				}
+			total();
+		}
+
+ //1,000단위 마다 콤마찍는 함수		
+		function commify(n) {
 			var reg = /(^[+-]?\d+)(\d{3})/; // 정규식 
 			n += ''; // 숫자를 문자열로 변환
 			while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
 			return n;
 		}
+		function uncommify(n) {
+			var leg = n.length;
+			for(var i = 0; i < leg; i++) {
+				n = n.replace(',', "");
+			}
+			return parseInt(n);
+		}
+		function total() {
+			x = document.form.total_sum;
+			t1 = document.form.t1_sum;
+			t2 = document.form.t2_sum;
+			t3 = document.form.t3_sum;
+			t1 = uncommify(t1.value);
+			t2 = uncommify(t2.value);
+			t3 = uncommify(t3.value);
+			x.value = commify(t1 + t2 + t3);
+		}
 </script>
-<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메뉴시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->			
-	
-		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ한림관ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-		<div class="building">
-			<p id=buildingTitle>한 림 관</p>
-		<div class="todayMenu">
-			<div class="todayHead" style="background: Bisque;">
-					<script>
-					  function getWeekOfMonth(date) {
-					     var selectedDayOfMonth = date.getDate();
-					     
-					     var first = new Date(date.getFullYear() + '/' + (date.getMonth() + 1) + '/01');
-					     var monthFirstDateDay = first.getDay();
-					     
-					     return Math.ceil((selectedDayOfMonth + monthFirstDateDay) / 7);
-					 }
-					  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째"];
-					  today = new Date(); 
-					  weekperiod = (today.getDate())-(today.getDay()-1);
-					  document.write(today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br>");
-					  document.write("<h3>(",weekperiod,"일 ~ ",weekperiod+4,"일)</h3>"); //그주에 월~금 날짜를 출력하길바람 0~5
-					</script>
-			</div>
-			
-				<div class="form-inline">				
-					<div class="col-lg-2 offset-1">					
-						<p id=weekmenuTitle>월</p>
-						<div class="weekmenu">
-							<div style="min-height:220px;">				
-								<p id=menuTitle>한 식</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>특 식</p>
-								<p>카레라이스</p>
-								<p>군만두</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>양 식</p>
-								<p>등심돈가스</p>					
-							</div>
-						</div>	
-					</div>
-					<div class="col-lg-2 ">					
-						<p id=weekmenuTitle>화</p>
-							<div class="weekmenu">
-							<div style="min-height:220px;">				
-								<p id=menuTitle>한 식</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>특 식</p>
-								<p>카레라이스</p>
-								<p>군만두</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>양 식</p>
-								<p>등심돈가스</p>					
-							</div>	
-						</div>
-					</div>
-					
-					<div class="col-lg-2 ">					
-						<p id=weekmenuTitle>수</p>
-						<div class="weekmenu">
-							<div style="min-height:220px;">				
-								<p id=menuTitle>한 식</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>특 식</p>
-								<p>카레라이스</p>
-								<p>군만두</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>양 식</p>
-								<p>등심돈가스</p>					
-							</div>	
-						</div>
-					</div>
-					<div class="col-lg-2 ">					
-						<p id=weekmenuTitle>목</p>
-						<div class="weekmenu">
-							<div style="min-height:220px;">				
-								<p id=menuTitle>한 식</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>특 식</p>
-								<p>카레라이스</p>
-								<p>군만두</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>양 식</p>
-								<p>등심돈가스</p>					
-							</div>	
-						</div>
-					</div>
-					
-					<div class="col-lg-2 ">					
-						<p id=weekmenuTitle>금</p>
-						<div class="weekmenu">
-							<div style="min-height:220px;">				
-								<p id=menuTitle>한 식</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>
-								<p>제육불고기</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>특 식</p>
-								<p>카레라이스</p>
-								<p>군만두</p>			
-							</div>
-							<div style="min-height:220px;">		
-								<p id=menuTitle>양 식</p>
-								<p>등심돈가스</p>					
-							</div>	
-						</div>
-					</div>					
-				</div>						
-			</div>
-		</div>
-		<br><br><br><br>
-		
- <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메 뉴 끝 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
- 	
+ <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 식권ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+ 
+ <div class="container" style="text-align: center;">
+	 <form name="form" method="get" action='./payAction.jsp'>
+	 	 	<input type=hidden name="storeID" value="북악관">
+	 
+	 	<table class="ticket">
+		 	<thead>
+		 		<tr>
+		 			<td>종류</td>
+		 			<td>선택</td>
+		 			<td>금액</td>
+		 			<td>수량</td>
+		 			<td>합계</td>
+		 		</tr>
+		 	</thead>
+		 	<tbody>
+		 		<tr>
+					<td>김밥</td>
+					<td>
+						<input type="checkbox" name="t3" onclick="t3_enable_text(this.checked)"><br> 
+					  	<input type=hidden name="t3_sell_price" value="3300">
+					</td>
+					<td>3,300원</td>
+					<td>
+						<input type="button" class="btn btn-default" name="t3_added" value=" + " onclick="t3_add();">
+						<input type="text"  class="btn btn-default"  style="width:30px;height:30px;"  name="t3_amount" value="0" size="5" onchange="change();">
+						<input type="button" class="btn btn-default" name="t3_deled" value=" - " onclick="t3_del();"><br> 
+					</td>
+					<td>
+						<input type="text" name="t3_sum" style="text-align:right " size="11" readonly >원
+					</td>
+				</tr>
+		 		<tr>
+					<td>식권 1장</td>
+					<td>
+						<input type="checkbox" name="t1" onclick="enable_text(this.checked)"><br> 
+					  	<input type=hidden name="t1_sell_price" value="4000">
+					</td>
+					<td>4,000원</td>
+					<td>
+						<input type="button" class="btn btn-default" name="t1_added" value=" + " onclick="add();">
+						<input type="text" class="btn btn-default"  style="width:30px;height:30px;" name="t1_amount" value="0" size="5" onchange="change();">
+						<input type="button" class="btn btn-default" name="t1_deled" value=" - " onclick="del();"><br> 
+					</td>
+					<td>
+						<input type="text" name="t1_sum" style="text-align:right " size="11" readonly >원
+					</td>
+				</tr>
 
- <form name="form" method="get">
-	식권선택 : <input type="checkbox" name=others onclick="enable_text(this.checked)";> 
-	<br>
-	수량 : <input type=hidden name="sell_price" value="4300">
-	<input type="text" name="amount" value="0" size="5" onchange="change();">
-	<input type="button" value=" + " onclick="add();">
-	<input type="button" value=" - " onclick="del();"><br> 
-	금액 : <input type="text" name="sum" style="TEXT-ALIGN:right " size="11" readonly >원
-</form>
+				<tr>
+					<td>식권 10장</td>
+					<td>
+						<input type="checkbox" name="t2" onclick="t2_enable_text(this.checked)"><br> 
+					  	<input type=hidden name="t2_sell_price" value="40000">
+					</td>
+					<td>40,000원</td>
+					<td>
+						<input type="button" class="btn btn-default" name="t2_added" value=" + " onclick="t2_add();">
+						<input type="text"  class="btn btn-default"  style="width:30px;height:30px;" name="t2_amount" value="0" size="5" onchange="t2_change();">
+						<input type="button" class="btn btn-default" name="t2_deled" value=" - " onclick="t2_del();"><br> 
+					</td>
+					<td>
+						<input type="text" name="t2_sum" style="text-align:right " size="11" readonly >원
+					</td>
+				</tr>
+				
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="1">
+						<h3 style="text-align:center;"> 총 결제금액 </h3>
+					</td>
+					<td colspan="3"></td>
+					<td colspan="1"  style="align-content:right;">
+						<input type="text"  style="text-align:right;" name="total_sum" size="11" onchange="total();" readonly> 원
+						 
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		<br><br><br>
+		<input type="submit" class="btn btn-success" value="결 제 하 기" style="width: 200px; height: 70px">
+	</form>
+</div>
 
-
-  		<div class="purchase">
-	   		<h1 style="text-align: center;">식 권</h1>
-   			<form class="form-inline">   			
-	   			<div class="col-lg-4 offset-2">	 
-					<div class="ticket">
-						식권 1매<br>4,300원<br>
-						선택 : <input type="checkbox" name="ticket1" value="4300">
-						수량 : <input type="number" name="amount1" value="1" min="1" max="9" >
-					</div>   
-				</div>
-				<div class="col-lg-4">	 
-					<div class="ticket">
-						식권 10매<br>43,000원<br>
-						<LABEL class="__checkboxArea"> 
-							<input value="uncheck" checked="" type="checkbox" name="name">
-						</LABEL>						
-						<div class="__count_range">
-						  <input value="-" count_range="m" type="button">
-						  <input class="count" value="1" readonly="" name="">
-						  <input value="+" count_range="p" type="button">
-						</div>
-					</div>   
-				</div>					
-   			</form>
-	  	 </div>
-   
-   
-   
+		<br><br><br>   
  
    
 <!--   footer    -->

@@ -11,9 +11,12 @@
 <%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.net.URLEncoder" %>
 <!DOCTYPE html>
 <html>
 <head> 
+
+
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META NAME="viewpoint" CONTENT="width=device-width, initial-scale=1,shrink-to-fit=no">
@@ -30,7 +33,7 @@ color:#000000;
 }
 </style>
 </head>
-<body  onload="init(); enable_text(false); t2_enable_text(false);"> 		<!--init()함수 로드, 사용상태를 불능 초기화 -->
+<body  onload="init(); enable_text(false); t2_enable_text(false); "> 		<!--init()함수 로드, 사용상태를 불능 초기화 -->
 	<%
 		// 로그인이 된 정보 담기
 		String userID = null;
@@ -51,42 +54,39 @@ color:#000000;
 		
 		<div id="navbar1" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">	
-	  			<li class="nav-item active"> 
+	  			<li class="nav-item "> 
 	  				<a class="nav-link" id="navfont" href="index.jsp">메 인</a>
 	  			</li>
 	  			
-				<li class="nav-item dropdown"> 
+				<li class="nav-item dropdown active"> 
 					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 식 당 </a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-						<a class="dropdown-item"  id="navfont" href="buildingH.jsp">한림관</a>
+						<a class="dropdown-item "  id="navfont" href="buildingH.jsp">한림관</a>
 						<a class="dropdown-item" id="navfont"  href="buildingB.jsp">북악관</a>
 						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">청운관</a>
 					</div>
 				</li>
 				
-	  			<li class="nav-item dropdown"> 
+	  			<li class="nav-item dropdown "> 
 					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 카 페 </a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-						<a class="dropdown-item"  id="navfont" href="buildingH.jsp">Olive Green</a>
-						<a class="dropdown-item" id="navfont"  href="buildingB.jsp">Cafe SP</a>
-						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">Cafe SB</a>
-						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">Laural</a>
+						<a class="dropdown-item"  id="navfont" href="#">Olive Green</a>
+						<a class="dropdown-item" id="navfont"  href="#">Cafe SP</a>
+						<a class="dropdown-item"  id="navfont" href="#">Cafe SB</a>
+						<a class="dropdown-item"  id="navfont" href="#">Laural</a>
 					</div>
 				</li>
 	  			
 	  			<li> 
-	  				<a class="nav-link" id="navfont" href="index.jsp">후 기</a>
+	  				<a class="nav-link" id="navfont" href="review.jsp">후 기</a>
 	  			</li>
 			</ul>
-			<form class="form-inline my-2 ">
-				<input class="form-control mr-sm-2" type="search" placeholder="내용을 입력하세요" aria-label="search">
-			 	<button class="btn btn-outline-success my-2 mt-sm-0 type="submit">검색</button>
-			</form>
+			
 			<% 	
 		 	if(userID!=null){				
 			%>
 			<ul class="nav navbar-nav navbar-right">	
-				<li><a class="dropdown-item" href="#">MyPage</a></li>		
+				<li><a class="dropdown-item" href="myPage.jsp">MyPage</a></li>		
 				<li><a class="dropdown-item" href="logoutAction.jsp">Logout</a></li>		
 			</ul>
  			<%
@@ -106,30 +106,39 @@ color:#000000;
 
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메뉴시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->			
 	
-		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ한림관ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
-		<div class="building">
-			<p id=buildingTitle>한 림 관</p>
+	<!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ한림관ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
+		
+	<div class="building">
 		<div class="todayMenu">
-			<div class="todayHead" style="background: Bisque;">
-					<script>
-					  function getWeekOfMonth(date) {		// 오늘이 몇주차 인지 구하는함수
-					     var selectedDayOfMonth = date.getDate();	
-					     var first = new Date(date.getFullYear() + '/' + (date.getMonth() + 1) + '/01');	//이달의 첫날 변수
-					     var monthFirstDateDay = first.getDay();		//이달의 첫날이 무슨요일인지 구함					     
-					     return Math.ceil((selectedDayOfMonth + monthFirstDateDay) / 7); 
-					 }
-					  
-					  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째"];
-					  today = new Date(); 
-					  weekperiod = (today.getDate())-(today.getDay()-1);
-					  document.write(today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br>");
-					  document.write("<h3>(",weekperiod,"일 ~ ",weekperiod+4,"일)</h3>"); //그주에 월~금 날짜를 출력하길바람 0~5
+		<div class="card text-center">
+			  <div class="card-header">
+				<p id=buildingTitle>한 림 관</p>
+			  </div>
+			  <div class="card-body">
+			  
+			   <h5 class="card-title">
+				  	<script>
+						  function getWeekOfMonth(date) {		// 오늘이 몇주차 인지 구하는함수
+						     var selectedDayOfMonth = date.getDate();	
+						     var first = new Date(date.getFullYear() + '/' + (date.getMonth() + 1) + '/01');	//이달의 첫날 변수
+						     var monthFirstDateDay = first.getDay();		//이달의 첫날이 무슨요일인지 구함					     
+						     return Math.ceil((selectedDayOfMonth + monthFirstDateDay) / 7); 
+						 }
+						  
+						  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째"];
+						  today = new Date(); 
+						  weekperiod = (today.getDate())-(today.getDay()-1);
+						  document.write(today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br>");
+						  document.write("<h3>[",weekperiod,"일 ~ ",weekperiod+4,"일]</h3>"); //그주에 월~금 날짜를 출력하길바람 0~5
 					</script>
+					<button class="btn btn-primary" onclick='location.href="menuManage.jsp?storeID=buildingH"'>식단 관리</button>
+				</h5>
+			  </div>
+			  <div class="card-footer text-muted">
+			    
+			  </div>
+		</div>
 					
-					<button href="#">식단 관리</button>
-					
-				
-			</div>
 				
 				
 				<%	
@@ -162,7 +171,18 @@ color:#000000;
 						</div>	
 						<%
 						}
+						if(list.size() ==0){					
 						%>
+						<div class="col-lg-12">
+							<div class="menu">
+								<p id=menuTitle><%out.print("오늘 메뉴");%></p>						
+								<p id=menuPrice><%out.print("미등록");%></p>						
+							</div>
+						</div>
+						<%
+						}
+						%>
+						
 					</div>
 					
 					<div class="col-lg-2 ">					
@@ -182,6 +202,16 @@ color:#000000;
 									<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
 								</div>
 							</div>	
+							<%
+							}
+							if(list.size() ==0){					
+							%>
+							<div class="col-lg-12">
+								<div class="menu">
+									<p id=menuTitle><%out.print("궁금 하지?");%></p>						
+									<p id=menuPrice><%out.print("좀만 참자");%></p>						
+								</div>
+							</div>
 							<%
 							}
 							%>
@@ -206,6 +236,16 @@ color:#000000;
 						</div>	
 						<%
 						}
+						if(list.size() ==0){					
+						%>
+						<div class="col-lg-12">
+							<div class="menu">
+								<p id=menuTitle><%out.print("누가제발");%></p>						
+								<p id=menuPrice><%out.print("밥먹을때");%></p>						
+							</div>
+						</div>
+						<%
+						}
 						%>
 					</div>
 					
@@ -226,6 +266,16 @@ color:#000000;
 								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
 							</div>
 						</div>	
+						<%
+						}
+						if(list.size() ==0){					
+						%>
+						<div class="col-lg-12">
+							<div class="menu">
+								<p id=menuTitle><%out.print("식당가서");%></p>						
+								<p id=menuPrice><%out.print("말해주라");%></p>						
+							</div>
+						</div>
 						<%
 						}
 						%>
@@ -250,6 +300,16 @@ color:#000000;
 						</div>	
 						<%
 						}
+						if(list.size() ==0){					
+						%>
+						<div class="col-lg-12">
+							<div class="menu">
+								<p id=menuTitle><%out.print("등록아직");%></p>						
+								<p id=menuPrice><%out.print("안됬다고");%></p>						
+							</div>
+						</div>
+						<%
+						}
 						%>
 					</div>					
 				</div>	
@@ -259,7 +319,7 @@ color:#000000;
 		<br><br><br><br>
 		
  <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ  J  s    ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
- <script language="JavaScript">
+   <script language="JavaScript">
 //----자동계산 시스템 -------------
 		var t1_sell_price;	// 판매가격
 		var t1_amount;		// 수량
@@ -267,37 +327,26 @@ color:#000000;
 		var t2_sell_price;	// 판매가격
 		var t2_amount;		// 수량
 
-	// 식권선택	
+
+		var total_sum;
+// 식권선택	
 		function init() { 
 			t1_sell_price = document.form.t1_sell_price.value;
 			t1_amount = document.form.t1_amount.value;
 
 			t2_sell_price = document.form.t2_sell_price.value;
 			t2_amount = document.form.t2_amount.value;
-
-
-			document.form.t1_sum.value = t1_sell_price;
-			document.form.t2_sum.value = t2_sell_price;
-			change();
-			t2_change();
+			
+			total_sum = document.form.total_sum.value;
 		}
 
 //1번째 티켓
-		
-		function change() {
-			t1_hm = document.form.t1_amount;	//수량
-			t1_sum = document.form.t1_sum;	//합계
-		
-				if (t1_hm.value < 0) {		// 수량이 음수이면
-					t1_hm.value = 0;		//그냥 0반환
-				}
-			t1_sum.value = commify(parseInt(t1_hm.value) * t1_sell_price);	//수량 x 가격 = 합계
-		}
 		function enable_text(status)
 		{
 			if(status<1){	//unchecked 상태일때 수량,금액 초기화
 			document.form.t1_sum.value = 0;
 			document.form.t1_amount.value = 0;
+			total();
 			}
 			status=!status	//상태를 변경시킴(true값이 들어오면 , false값)
 			document.form.t1_amount.disabled = status;	//사용가능여부 바꿔줌
@@ -307,8 +356,18 @@ color:#000000;
 		function add() {
 			t1_hm = document.form.t1_amount;
 			t1_sum = document.form.t1_sum;
+			total_sum = document.form.total_sum;
 			t1_hm.value ++ ;
 			t1_sum.value = commify(parseInt(t1_hm.value) * t1_sell_price);	//합계에 그대로 반환
+			total();
+		}
+		function change_amount() {
+			t1_hm = document.form.t1_amount;
+			document.form.t1_amount.value = t1_hm.value;
+			t1_sum = document.form.t1_sum;
+			total_sum = document.form.total_sum;
+			t1_sum.value = commify(parseInt(t1_hm.value) * t1_sell_price);	//합계에 그대로 반환
+			total();
 		}
 		
 		function del() {
@@ -318,23 +377,17 @@ color:#000000;
 					t1_hm.value -- ;
 					t1_sum.value = commify(parseInt(t1_hm.value) * t1_sell_price);	//합계에 그대로 반환
 				}
+			total();
 		}
-//2번째 티켓
 
-		function t2_change() {
-			t2_hm = document.form.t2_amount;	//수량
-			t2_sum = document.form.t2_sum;	//합계
+//2번째 티켓
 		
-				if (t2_hm.value < 0) {		// 수량이 음수이면
-					t2_hm.value = 0;		//그냥 0반환
-				}
-			t2_sum.value = commify(parseInt(t2_hm.value) * t2_sell_price);	//수량 x 가격 = 합계
-		}
 		function t2_enable_text(status)
 		{
 			if(status<1){	//unchecked 상태일때 수량,금액 초기화
 			document.form.t2_sum.value = 0;
 			document.form.t2_amount.value = 0;
+			total();
 			}
 			status=!status	//상태를 변경시킴(true값이 들어오면 , false값)
 			document.form.t2_amount.disabled = status;	//사용가능여부 바꿔줌
@@ -346,6 +399,7 @@ color:#000000;
 			t2_sum = document.form.t2_sum;
 			t2_hm.value ++ ;
 			t2_sum.value = commify(parseInt(t2_hm.value) * t2_sell_price);	//합계에 그대로 반환
+			total();
 		}
 		
 		function t2_del() {
@@ -355,22 +409,46 @@ color:#000000;
 					t2_hm.value -- ;
 					t2_sum.value = commify(parseInt(t2_hm.value) * t2_sell_price);	//합계에 그대로 반환
 				}
+			total();
 		}
- 	
- 	//1,000단위 마다 콤마찍는 함수		
+		function t2_change_amount() {
+			t2_hm = document.form.t2_amount;
+			document.form.t2_amount.value = t2_hm.value;
+			t2_sum = document.form.t2_sum;
+			total_sum = document.form.total_sum;
+			t2_sum.value = commify(parseInt(t2_hm.value) * t2_sell_price);	//합계에 그대로 반환
+			total();
+		}
+
+
+ //1,000단위 마다 콤마찍는 함수		
 		function commify(n) {
 			var reg = /(^[+-]?\d+)(\d{3})/; // 정규식 
 			n += ''; // 숫자를 문자열로 변환
 			while (reg.test(n)) n = n.replace(reg, '$1' + ',' + '$2');
 			return n;
 		}
-		
+		function uncommify(n) {
+			var leg = n.length;
+			for(var i = 0; i < leg; i++) {
+				n = n.replace(',', "");
+			}
+			return parseInt(n);
+		}
+		function total() {
+			x = document.form.total_sum;
+			t1 = document.form.t1_sum;
+			t2 = document.form.t2_sum;
+			t1 = uncommify(t1.value);
+			t2 = uncommify(t2.value);
+			x.value = commify(t1 + t2);
+		}
 </script>
  <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 식권ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
  
- <div class="col-xs-10 offset-1">
-	 <div class="purchase">
-	 <form name="form" method="get">
+ <div class="container" style="text-align: center;">
+	 <form name="form" method="get" action='./payAction.jsp'>
+	 	<input type=hidden name="storeID" value="한림관">
 	 	<table class="ticket">
 		 	<thead>
 		 		<tr>
@@ -390,9 +468,9 @@ color:#000000;
 					</td>
 					<td>4,300원</td>
 					<td>
-						<input type="button" name="t1_added" value=" + " onclick="add();">
-						<input type="text" style="width:50px; height:50px;" name="t1_amount" value="0" size="5" onchange="change();">
-						<input type="button" name="t1_deled" value=" - " onclick="del();"><br> 
+						<input type="button" class="btn btn-default" name="t1_added" value=" + " onclick="add();">
+						<input type="text" class="btn btn-default" style="width:30px;height:30px;" name="t1_amount" value="0" size="5"  onkeyup="change_amount()">
+						<input type="button" class="btn btn-default" name="t1_deled" value=" - " onclick="del();"><br> 
 					</td>
 					<td>
 						<input type="text" name="t1_sum" style="text-align:right " size="11" readonly >원
@@ -407,30 +485,34 @@ color:#000000;
 					</td>
 					<td>43,000원</td>
 					<td>
-						<input type="button" name="t2_added" value=" + " onclick="t2_add();">
-						<input type="text" style="width:50px;height:50px" name="t2_amount" value="0" size="5" onchange="t2_change();">
-						<input type="button" name="t2_deled" value=" - " onclick="t2_del();"><br> 
+						<input type="button" class="btn btn-default" name="t2_added" value=" + " onclick="t2_add();">
+						<input type="text" class="btn btn-default" style="width:30px; height:30px" name="t2_amount" value="0" onkeyup="t2_change_amount()" >
+						<input type="button" class="btn btn-default" name="t2_deled" value=" - " onclick="t2_del();"><br> 
 					</td>
 					<td>
 						<input type="text" name="t2_sum" style="text-align:right " size="11" readonly >원
 					</td>
 				</tr>
 				
+				
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="5">
-						<h1 style="text-align:center;"> 총 결제금액  
-							<input type="text"  style="text-align:right;" id="total_sum" size="11" onchange="total();" readonly> 원
+					<td colspan="1">
+						<h3 style="text-align:center;"> 총 결제금액  </h3>
+					</td>
+					<td colspan="3"></td>
+					<td colspan="1"  style="align-content:right;">
+						<input type="text"  style="text-align:right;" name="total_sum" size="11"  readonly> 원
+						
 						</h1>
 					</td>
 				</tr>
 			</tfoot>
 		</table>
 		<br><br><br>
-		<input type="button" value="결 제 하 기" onclick="pay();"style="width: 200px; height: 70px">
+		<input type="submit" class="btn btn-success" value="결 제 하 기" style="width: 200px; height: 70px">
 	</form>
-	</div>
 </div>
 
 		<br><br><br>   
@@ -449,7 +531,6 @@ color:#000000;
         </div>
     </footer>
 <!-- 애니메이션 참조 -->
-
 
 	<script src="js/jquery-1.11.1.min.js"></script> 
 	<script src ="js/bootstrap.min.js"> </script>
