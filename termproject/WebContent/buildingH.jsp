@@ -129,9 +129,8 @@ color:#000000;
 						  today = new Date(); 
 						  weekperiod = (today.getDate())-(today.getDay()-1);
 						  document.write(today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br>");
-						  document.write("<h3>[",weekperiod,"일 ~ ",weekperiod+4,"일]</h3>"); //그주에 월~금 날짜를 출력하길바람 0~5
 					</script>
-					<button class="btn btn-primary" onclick='location.href="menuManage.jsp?storeID=buildingH"'>식단 관리</button>
+					<button class="btn btn-outline-primary" onclick='location.href="menuManage.jsp?storeID=buildingH"'>식단 관리</button>
 				</h5>
 			  </div>
 			  <div class="card-footer text-muted">

@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 public class DatabaseUtil {
 	public static Connection getConnection() {
 	try {
-		String dbURL = "jdbc:mysql://localhost:3306/skubab?characterEncoding=UTF-8&serverTimezone=UTC";
+		String dbURL = "jdbc:mysql://localhost:3306/skubab?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false";
 		String dbID = "root";
 		String dbpassword = "bang";
 		Class.forName("com.mysql.cj.jdbc.Driver");

@@ -167,7 +167,6 @@ color:#000000;
 		
 <!-- 리뷰게시판      ㅡㅡ -->	
 <div style="margin:30px;">	
-	
 		<div class="card bg-light mt-3">
 			<div class="card-header bg-light">
 				<div class="row">

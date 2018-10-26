@@ -29,7 +29,7 @@ color:#000000;
 }
 </style>
 </head>
-<body  onload="init(); enable_text(false); t2_enable_text(false); t3_enable_text(false);"> 		<!--init()함수 로드, 사용상태를 불능 초기화 -->
+<body  onload="init(); enable_text(false); t2_enable_text(false); t3_enable_text(false); t4_enable_text(false);"> 		<!--init()함수 로드, 사용상태를 불능 초기화 -->
 	<%
 		// 로그인이 된 정보 담기
 		String userID = null;
@@ -123,9 +123,8 @@ color:#000000;
 						  today = new Date(); 
 						  weekperiod = (today.getDate())-(today.getDay()-1);
 						  document.write(today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br>");
-						  document.write("<h3>[",weekperiod,"일 ~ ",weekperiod+4,"일]</h3>"); //그주에 월~금 날짜를 출력하길바람 0~5
 					</script>
-					<button class="btn btn-primary" onclick='location.href="menuManage.jsp?storeID=buildingC"'>식단 관리</button>
+					<button class="btn btn-outline-primary" onclick='location.href="menuManage.jsp?storeID=buildingC"'>식단 관리</button>
 				</h5>
 			  </div>
 			  <div class="card-footer text-muted">
@@ -322,7 +321,10 @@ color:#000000;
 
 		var t3_sell_price;	// 판매가격
 		var t3_amount;		// 수량
-
+		
+		var t4_sell_price;	// 판매가격
+		var t4_amount;		// 수량
+		
 		var total_sum;
 // 식권선택	
 		function init() { 
@@ -334,6 +336,9 @@ color:#000000;
 
 			t3_sell_price = document.form.t3_sell_price.value;
 			t3_amount = document.form.t3_amount.value;
+			
+			t4_sell_price = document.form.t4_sell_price.value;
+			t4_amount = document.form.t4_amount.value;
 
 			total_sum = document.form.total_sum.value;
 		}
@@ -432,6 +437,37 @@ color:#000000;
 				}
 			total();
 		}
+//4번째 티켓
+		
+		function t4_enable_text(status)
+		{
+			if(status<1){	//unchecked 상태일때 수량,금액 초기화
+			document.form.t4_sum.value = 0;
+			document.form.t4_amount.value = 0;
+			total();
+			}
+			status=!status	//상태를 변경시킴(true값이 들어오면 , false값)
+			document.form.t4_amount.disabled = status;	//사용가능여부 바꿔줌
+			document.form.t4_added.disabled = status;	//사용가능여부 바꿔줌
+			document.form.t4_deled.disabled = status;	//사용가능여부 바꿔줌
+		}		
+		function t4_add() {
+			t4_hm = document.form.t4_amount;
+			t4_sum = document.form.t4_sum;
+			t4_hm.value ++ ;
+			t4_sum.value = commify(parseInt(t4_hm.value) * t4_sell_price);	//합계에 그대로 반환
+			total();
+		}
+		
+		function t4_del() {
+			t4_hm = document.form.t4_amount;
+			t4_sum = document.form.t4_sum;
+				if (t4_hm.value >= 1) {
+					t4_hm.value -- ;
+					t4_sum.value = commify(parseInt(t4_hm.value) * t4_sell_price);	//합계에 그대로 반환
+				}
+			total();
+		}
 
  //1,000단위 마다 콤마찍는 함수		
 		function commify(n) {
@@ -452,10 +488,12 @@ color:#000000;
 			t1 = document.form.t1_sum;
 			t2 = document.form.t2_sum;
 			t3 = document.form.t3_sum;
+			t4 = document.form.t4_sum;
 			t1 = uncommify(t1.value);
 			t2 = uncommify(t2.value);
 			t3 = uncommify(t3.value);
-			x.value = commify(t1 + t2 + t3);
+			t4 = uncommify(t4.value);
+			x.value = commify(t1 + t2 + t3 +t4);
 		}
 </script>
  <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 식권ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
@@ -475,13 +513,29 @@ color:#000000;
 		 		</tr>
 		 	</thead>
 		 	<tbody>
+			 	<tr>
+					<td>추가 (공기밥,치즈,떡,만두..)</td>
+					<td>
+						<input type="checkbox" name="t4" onclick="t4_enable_text(this.checked)"><br> 
+						<input type=hidden name="t4_sell_price" value="500">
+					</td>
+						<td>500원</td>
+					<td>
+						<input type="button"  class="btn btn-default" name="t4_added" value=" + " onclick="t4_add();">
+						<input type="text"  class="btn btn-default"  style="width:30px;height:30px;" name="t4_amount" value="0" size="5" onchange="change();">
+						<input type="button" class="btn btn-default"  name="t4_deled" value=" - " onclick="t4_del();"><br> 
+					</td>
+					<td>
+						<input type="text" name="t4_sum" style="text-align:right " size="11" readonly >원
+					</td>
+				</tr>
 		 		<tr>
-					<td>분식류</td>
+					<td>라면/분식</td>
 					<td>
 						<input type="checkbox" name="t3" onclick="t3_enable_text(this.checked)"><br> 
-					  	<input type=hidden name="t3_sell_price" value="3000">
+					  	<input type=hidden name="t3_sell_price" value="2500">
 					</td>
-					<td>3,000원</td>
+					<td>2,500원</td>
 					<td>
 						<input type="button"  class="btn btn-default" name="t3_added" value=" + " onclick="t3_add();">
 						<input type="text"  class="btn btn-default"  style="width:30px;height:30px;"  name="t3_amount" value="0" size="5" onchange="change();">
@@ -492,12 +546,12 @@ color:#000000;
 					</td>
 				</tr>
 		 		<tr>
-					<td>식권 1장</td>
+					<td>참치 김밥</td>
 					<td>
 						<input type="checkbox" name="t1" onclick="enable_text(this.checked)"><br> 
-					  	<input type=hidden name="t1_sell_price" value="4000">
+					  	<input type=hidden name="t1_sell_price" value="3000">
 					</td>
-					<td>4,000원</td>
+					<td>3,000원</td>
 					<td>
 						<input type="button"  class="btn btn-default" name="t1_added" value=" + " onclick="add();">
 						<input type="text" class="btn btn-default"  style="width:30px;height:30px;" name="t1_amount" value="0" size="5" onchange="change();">
@@ -509,12 +563,12 @@ color:#000000;
 				</tr>
 
 				<tr>
-					<td>식권 10장</td>
+					<td>인터네셔널 / 한식</td>
 					<td>
 						<input type="checkbox" name="t2" onclick="t2_enable_text(this.checked)"><br> 
-					  	<input type=hidden name="t2_sell_price" value="40000">
+					  	<input type=hidden name="t2_sell_price" value="4000">
 					</td>
-					<td>40,000원</td>
+					<td>4,000원</td>
 					<td>
 						<input type="button" class="btn btn-default"  name="t2_added" value=" + " onclick="t2_add();">
 						<input type="text" class="btn btn-default"  style="width:30px;height:30px;" name="t2_amount" value="0" size="5" onchange="t2_change();">
