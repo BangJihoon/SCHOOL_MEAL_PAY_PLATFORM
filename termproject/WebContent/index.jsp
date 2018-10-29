@@ -8,22 +8,19 @@
 <%@ page import="menu.MenuDTO" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
-<!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/custom.css">
-	<link rel="stylesheet" href="css/clock.css" >  
-	
-	
-	
-	
-	<TITLE>SKU_Bab- 학식결제,식권관리</TITLE>
+	<link rel="stylesheet" href="css/clock.css" > 
+  	
+	<TITLE>SKU_Bab- 학식메뉴,식권결제 스마트하게</TITLE>
 </head>
-
-<body>
+<body >
 	<%
 	// 로그인이 된 정보 담기
 		String userID = null;
@@ -94,84 +91,102 @@
 		</div>
 	</nav>
  
-<!-- 본문 -->
-	
-<!-- 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-	<style>
-	/* Make the image fully responsive */
-	.carousel-inner img {
-	    width: 100%;
-	    height: 100%;
-	}
-	</style>
-	
-	<div id="demo" class="carousel slide" data-ride="carousel">
+<!-- ㅡㅡㅡㅡㅡㅡㅡ 회전식  캐러셀 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ   -->
 
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+ <!-- Indicators -->
   <ul class="carousel-indicators">
     <li data-target="#demo" data-slide-to="0" class="active"></li>
     <li data-target="#demo" data-slide-to="1"></li>
     <li data-target="#demo" data-slide-to="2"></li>
   </ul>
   
-	<div class="carousel-inner">
-	  <div class="carousel-item active">
-	    <img src="img/main.jpg" alt="Los Angeles" width="1100" height="500">
-	  </div>
-	  <div class="carousel-item">
-	    <img src="img/logo4.jpg" alt="Chicago" width="1100" height="500">
-	  </div>
-	  <div class="carousel-item">
-	    <img src="img/logo.jpg" alt="New York" width="1100" height="500">
-	  </div>
-	</div>
-	
-	  <a class="carousel-control-prev" href="#demo" data-slide="prev">
-	    <span class="carousel-control-prev-icon"></span>
-	  </a>
-	  <a class="carousel-control-next" href="#demo" data-slide="next">
-	    <span class="carousel-control-next-icon"></span>
-	  </a>
-	</div>
--->
-
-
-<!--  여기부터  이미지 슬라이드 
-<div id="slider-wrapper">
-  <div class="inner-wrapper">
-    <input checked type="radio" name="slide" class="control" id="Slide1" />
-    <label for="Slide1" id="s1"></label>
-    <input type="radio" name="slide" class="control" id="Slide2" />
-    <label for="Slide2" id="s2"></label>
-    <input type="radio" name="slide" class="control" id="Slide3" />
-    <label for="Slide3" id="s3"></label>
-    <input type="radio" name="slide" class="control" id="Slide4" />
-    <label for="Slide4" id="s4"></label>
-    <div class="overflow-wrapper">
-      <a class="slide" href=""><img src="./img/main.jpg" /></a>
-      <a class="slide" href=""><img src="./img/1.jpg" /></a>
-      <a class="slide" href=""><img src="./img/2.jpg" /></a>
-      <a class="slide" href=""><img src="./img/main.jpg" /></a>
+ <!-- 캐러설 본문, 컨텐트 -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="img/main.jpg">
+      
+      	<div class="carousel-caption">
+      		<h1  style="font-size:45; text-align:center">서경대학교 학식</h1>
+			<p class="text-center">스마트한 식권구매, 학식리뷰</p>	
+		</div>
+    </div>
+    
+    
+    
+    
+    <div class="carousel-item">
+      <img src="img/main2.jpg">
+      	<div class="carousel-caption">
+			<h2 class="text-center"> 줄이길어슬펐던 서경인이여 </h2>
+      <p class="text-center">오랫동안 줄서서 뽑지말고, 메뉴보고 바로구매</p>
+		</div>
+    </div>
+    <div class="carousel-item">
+      <img src="img/main5.jpg">
+      	<div class="carousel-caption">
+      		<h2 class="text-center"> 메뉴가 궁금했던 서경인에게 </h2>
+      		<p class="text-center"> 5G급 업로드로 화답</p> 
+		</div>
     </div>
   </div>
-</div>-->
- <!-- ㅡㅡㅡㅡ 메인 점보트론 사진 ㅡㅡㅡㅡㅡㅡ  -->
+  
+ <!-- 캐러설 컨트롤러 -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev" >
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+</div>
+
+<!-- 회전목마 활성화 -->
+<script>
+$(document).ready(function(){
+    // Activate Carousel with a specified interval
+    $("#myCarousel").carousel({interval: 2000});
+        
+    // Enable Carousel Indicators
+    $(".item1").click(function(){
+        $("#myCarousel").carousel(0);
+    });
+    $(".item2").click(function(){
+        $("#myCarousel").carousel(1);
+    });
+    $(".item3").click(function(){
+        $("#myCarousel").carousel(2);
+    });
+    
+    // Enable Carousel Controls
+    $(".carousel-control-prev").click(function(){
+        $("#myCarousel").carousel("prev");
+    });
+    $(".carousel-control-next").click(function(){
+        $("#myCarousel").carousel("next");
+    });
+});
+</script>
+
+
+ <!-- ㅡㅡㅡㅡ 메인 점보트론 사진 ㅡㅡㅡㅡㅡㅡ 
  
 
 	<div class="container-fluid">
 		<div class="jumbotron">
-			<h1 class="text-center" style="font-size:80;">서경대학교 학식</h1><br>
+			<h1  style="font-size:60; text-align:center">서경대학교 학식</h1><br>
+			<br><br><br><br>
+			
+			
+			
 			<h2 class="text-center">스마트한 식권구매 및 관리 </h2>
 			<p class="text-center">오랫동안 줄서서 뽑지말고, 메뉴보고 바로결제</p>	
-			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br><br>
 		</div>
 	</div>
+	 -->
 	
-	
-				<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ 전자시계 ㅡㅡㅡㅡㅡㅡㅡㅡ -->	
+				<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ 전자시계 ㅡㅡㅡㅡㅡㅡㅡㅡ 
 					<div class="col-6 offset-3" style="align-content:center;">
 						<div id="clock" class="light">
 							<div class="display">
@@ -185,7 +200,7 @@
 						<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 						<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
 						<script src="js/jquery.digitalclock.js"></script>
-				<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ 전자시계 ㅡㅡㅡㅡㅡㅡㅡㅡ -->		
+				 ㅡㅡㅡㅡㅡㅡㅡㅡ 전자시계 ㅡㅡㅡㅡㅡㅡㅡㅡ -->		
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메뉴시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->	
 <div class="form-inline">				
 	<div class="container">
@@ -330,7 +345,6 @@
                     <br>
                     <p>불편 피드백은 메일로 주세요 <br>jihoon289@naver.com</p>
            			  <h5><strong> CopyRight &copy; OWL Right Reserved</strong></h5>
-           			  <br><br>
                 </div>
             </div>
         </div>
@@ -338,6 +352,9 @@
     
 <!-- 애니메이션 참조 -->
 
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  	
 	<script src="js/jquery-1.11.1.min.js"></script> 
 	<script src ="js/bootstrap.min.js"> </script>
 	<script src ="js/jquery.min.js"> </script>

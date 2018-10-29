@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
 @import url(https://fonts.googleapis.com/css?family=Do+Hyeon);
 /*------------------   메  인  -----------------------------------------------*/
+html, body { height: 100%; margin: 0; padding: 0; } 
 .brandLogo{
 font-size: 50px;
 background-image:url("../img/a.png");
@@ -64,6 +65,27 @@ html,body{
 	max-height: 100%;
 	padding-top: 50px
 }
+/* Make the image fully responsive */
+.carousel-inner{
+	text-shadow: blue 0.2em 0.2em 0.2em;
+	text-color:white;
+    height: auto;
+    overflow: hidden;    
+    max-height: 60%;
+    
+}
+.carousel-inner img{
+	max-width: 100%;
+	max-height: 60%;
+	size: cover;
+	repeat: no-repeat;
+    width: 100%;
+    height: auto;
+    max-height: 60%;
+    overflow: hidden;
+}
+/* Make the image fully responsive */
+
 
 .joinbox{
 	background-image: url('../img/joinbox.jpg');
@@ -83,6 +105,17 @@ html,body{
 	max-height: 100%;
 	padding-top: 60px;
 	padding-bottom: 60px;
+}
+#footer {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+color: white;
+background-color: #333333;
+text-align: center;
+background-color: skyblue;
+color:black;
 }
 
 /*------------------   메  뉴  -------------------------------------------------*/

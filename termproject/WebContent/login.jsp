@@ -119,8 +119,7 @@ color:#000000;
 				 </div>
 
 <!--   footer    -->
-    <footer  style="background-color: skyblue;color:black;">
-    
+    <footer id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-lg-offset-1 text-center COLSPAN=5 ALIGN=center">

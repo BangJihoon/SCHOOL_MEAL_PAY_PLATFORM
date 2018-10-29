@@ -8,7 +8,7 @@ import util.DatabaseUtil;
 
 public class UserDAO {
 	public int join(UserDTO user) {
-		String SQL = "INSERT INTO USER VALUES(?,?,?,?,false)";
+		String SQL = "INSERT INTO user VALUES(?,?,?,?,false)";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		try {
@@ -31,7 +31,7 @@ public class UserDAO {
 	
 	
 	public int login(String userID,String userPW) {
-		String SQL = "SELECT userPW FROM USER WHERE userID = ?";
+		String SQL = "SELECT userPW FROM user WHERE userID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
@@ -54,7 +54,7 @@ public class UserDAO {
 		return -2;	// db접근 오류
 	}
 	public int joinCheck(String userID) {
-		String SQL = "SELECT * FROM USER WHERE userID = ?";
+		String SQL = "SELECT * FROM user WHERE userID = ?";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
@@ -79,7 +79,7 @@ public class UserDAO {
 		return -1; 	//오류시 -1
 	}
 	public int emailCheck(String email) {
-		String SQL = "SELECT * FROM USER WHERE email = ?";
+		String SQL = "SELECT * FROM user WHERE email = ?";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;

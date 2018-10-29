@@ -95,7 +95,7 @@ public class ReviewDAO {
 
 	
 	public int like(String reviewID) {	// 좋아요 카운트 함수
-		String SQL = "UPDATE REVIEW SET likeCount = likeCount+1 WHERE reviewID = ? ";
+		String SQL = "UPDATE review SET likeCount = likeCount+1 WHERE reviewID = ? ";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
@@ -117,7 +117,7 @@ public class ReviewDAO {
 	
 	
 	public int delete(String reviewID) { // 리뷰삭제 함수
-		String SQL = "DELETE FROM REVIEW WHERE reviewID = ? ";
+		String SQL = "DELETE FROM review WHERE reviewID = ? ";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
@@ -138,7 +138,7 @@ public class ReviewDAO {
 	}
 	
 	public String getUserID(String reviewID) {	// 리뷰작성자 아이디가져오는 함수
-		String SQL = "SELECT userID FROM REVIEW WHERE reviewID = ? ";
+		String SQL = "SELECT userID FROM review WHERE reviewID = ? ";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
