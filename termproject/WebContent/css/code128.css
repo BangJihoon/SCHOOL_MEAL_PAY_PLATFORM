@@ -1,0 +1,82 @@
+.barcode {
+	PADDING-BOTTOM: 0px; height:100%; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FLOAT: center; HEIGHT: 0.5in; CLEAR: both; OVERFLOW: auto; PADDING-TOP: 0px
+}
+.right {
+	FLOAT: right;
+	height:100%;
+}
+.barcode + * {
+	CLEAR: both
+}
+.barcode DIV {
+	FLOAT: left; HEIGHT: 0.35in
+}
+.barcode .bar1 {
+	BORDER-LEFT: black 1px solid
+}
+.barcode .bar2 {
+	BORDER-LEFT: black 2px solid
+}
+.barcode .bar3 {
+	BORDER-LEFT: black 3px solid
+}
+.barcode .bar4 {
+	BORDER-LEFT: black 4px solid
+}
+.barcode .space0 {
+	MARGIN-RIGHT: 0px
+}
+.barcode .space1 {
+	MARGIN-RIGHT: 1px
+}
+.barcode .space2 {
+	MARGIN-RIGHT: 2px
+}
+.barcode .space3 {
+	MARGIN-RIGHT: 3px
+}
+.barcode .space4 {
+	MARGIN-RIGHT: 4px
+}
+.barcode LABEL {
+	TEXT-ALIGN: center; DISPLAY: block; FONT: 0.125in/100% helvetica; CLEAR: both
+}
+.barcode2 {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 10px; PADDING-RIGHT: 10px; FLOAT: left; HEIGHT: 1in; CLEAR: both; OVERFLOW: auto; PADDING-TOP: 0px
+}
+.barcode2 + * {
+	CLEAR: both
+}
+.barcode2 DIV {
+	FLOAT: left; HEIGHT: 0.7in
+}
+.barcode2 .bar1 {
+	BORDER-LEFT: black 2px solid
+}
+.barcode2 .bar2 {
+	BORDER-LEFT: black 4px solid
+}
+.barcode2 .bar3 {
+	BORDER-LEFT: black 6px solid
+}
+.barcode2 .bar4 {
+	BORDER-LEFT: black 8px solid
+}
+.barcode2 .space0 {
+	MARGIN-RIGHT: 0px
+}
+.barcode2 .space1 {
+	MARGIN-RIGHT: 2px
+}
+.barcode2 .space2 {
+	MARGIN-RIGHT: 4px
+}
+.barcode2 .space3 {
+	MARGIN-RIGHT: 6px
+}
+.barcode2 .space4 {
+	MARGIN-RIGHT: 8px
+}
+.barcode2 LABEL {
+	TEXT-ALIGN: center; DISPLAY: block; FONT: 0.25in/100% helvetica; CLEAR: both
+}
