@@ -171,6 +171,26 @@ color:#000000;
 		 			</tr>
 		 		</thead>
 		 		<tbody>
+		 			
+		 			
+		 			
+		 			<tr>
+		 				<td><h5>이름</h5></td>
+		 				<td colspan="3"><input type="text" class="form-control" placeholder="이름을 입력해주세요 " name="name" maxlength="20"></td>
+		 			</tr>
+		 			<tr>
+		 				<td><h5>E-mail</h5></td>
+		 				<td colspan="2">
+		 					<input name="email" id="email" type="text" placeholder="이메일을 입력해주세요" onkeyup="emailCheckedFuntion();" class="form-control"  size="20">
+		 					<p style='color:red; text-align:left;' id="emailCheckMessage"></p>
+		 				</td>
+		 				<td>
+		 					<input type="button" class=" btn btn-success form-control" onclick="emailDuplication()" value ="메일확인">
+		 				</td>
+		 			</tr>
+		 			<tr>
+		 				<td colspan="4"><h4>기본정보 </h4></td>
+		 			</tr>
 		 			<tr>
 		 				<td style="width:110px;"> <h5>아이디</h5>
 		 				<td colspan="2"> 
@@ -198,24 +218,6 @@ color:#000000;
 		 					<input type="password" class="form-control" id="pw2" onkeyup="passwordCheckedFuntion();" placeholder="비밀번호를 확인합니다 " maxlength="20">
 			 				<p style='color:red; text-align:left;' id="passwordCheckMessage"> </p>
 						</td>
-		 			</tr>
-		 			
-		 			<tr>
-		 				<td colspan="4"><h4>기본정보 </h4></td>
-		 			</tr>
-		 			<tr>
-		 				<td><h5>이름</h5></td>
-		 				<td colspan="3"><input type="text" class="form-control" placeholder="이름을 입력해주세요 " name="name" maxlength="20"></td>
-		 			</tr>
-		 			<tr>
-		 				<td><h5>E-mail</h5></td>
-		 				<td colspan="2">
-		 					<input name="email" id="email" type="text" placeholder="이메일을 입력해주세요" onkeyup="emailCheckedFuntion();" class="form-control"  size="20">
-		 					<p style='color:red; text-align:left;' id="emailCheckMessage"></p>
-		 				</td>
-		 				<td>
-		 					<input type="button" class=" btn btn-success form-control" onclick="emailDuplication()" value ="메일확인">
-		 				</td>
 		 			</tr>
 		 		</tbody>
 		 		

@@ -94,10 +94,10 @@ color:#000000;
 	  			<li class="nav-item dropdown"> 
 					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 카 페 </a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
-						<a class="dropdown-item"  id="navfont" href="buildingH.jsp">Olive Green</a>
-						<a class="dropdown-item" id="navfont"  href="buildingB.jsp">Cafe SP</a>
-						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">Cafe SB</a>
-						<a class="dropdown-item"  id="navfont" href="buildingC.jsp">Laural</a>
+						<a class="dropdown-item"  id="navfont" href="javascript:alert('아직 준비중입니다.');">Olive Green</a>
+						<a class="dropdown-item" id="navfont"  href="javascript:alert('아직 준비중입니다.');">Cafe SP</a>
+						<a class="dropdown-item"  id="navfont" href="javascript:alert('아직 준비중입니다.');">Cafe SB</a>
+						<a class="dropdown-item"  id="navfont" href="javascript:alert('아직 준비중입니다.');">Laural</a>
 					</div>
 				</li>
 	  			
@@ -110,7 +110,7 @@ color:#000000;
 		 	if(userID!=null){				
 			%>
 			<ul class="nav navbar-nav navbar-right">	
-				<li><a class="dropdown-item" href="myPage.jsp"><%=userID%>'s 식권</a></li>		
+				<li><a class="dropdown-item" href="myPage.jsp">My Ticket</a></li>		
 				<li><a class="dropdown-item" href="logoutAction.jsp">Logout</a></li>		
 			</ul>
  			<%
@@ -260,16 +260,30 @@ color:#000000;
 							<div class="form-row">
 								<div class="form-group col-sm-6">
 									<label>장 소</label>
-									<select name="storeID" class="form-control" >
+									<select name="storeID" id="storeID" class="form-control" >
 										<option value="" selectde>장소를 선택해주세요</option>
 										<option value="한림관">한림관</option>
 										<option value="북악관">북악관</option>
 										<option value="청운관">청운관</option>
 									</select>
+									
 								</div>
 								<div class="form-group col-sm-6">
 									<label>메 뉴</label>
-									<input type="text" name="menuName" class="form-control" maxlength="40">
+									<select name="menuName" id="menuName" class="form-control mx-1 mt+2">
+										<option value="전체" selected>전체보기</option>
+											<option value="한식" >한림관-한식</option>
+											<option value="특식" >한림관-특식</option>
+											<option value="양식" >한림관-양식</option>
+									
+											<option value="Kitchen1">북악관 - Kitchen1</option>
+											<option value="Kitchen2">북악관 - Kitchen2</option>
+											<option value="분식" >북악관 - 김밥분식</option>
+										
+											<option value="인터네셔널">청운관 - 인터네셔널</option>
+											<option value="한식" >청운관 - 한식</option>
+											<option value="분식" >청운관 - 분식</option>
+									</select>
 								</div>
 							</div>
 				

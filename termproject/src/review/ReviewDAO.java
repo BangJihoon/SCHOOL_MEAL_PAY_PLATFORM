@@ -41,9 +41,7 @@ public class ReviewDAO {
 	
 	
 	//검색에 따른 리뷰글 반환
-	public ArrayList<ReviewDTO> getList(String storeID, String searchType, String search, int pageNumber){
-
-		
+	public ArrayList<ReviewDTO> getList(String storeID, String searchType, String search, int pageNumber){	
 		if(storeID.equals("전체")) {
 			storeID = "";
 		}

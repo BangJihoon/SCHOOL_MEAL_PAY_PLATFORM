@@ -22,14 +22,15 @@ public class MenuDAO {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				MenuDTO menuDTO= new MenuDTO();
-				
-				menuDTO.setStoreID(rs.getString(1));
-				menuDTO.setMenuDate(rs.getString(2));
-				menuDTO.setMenuName(rs.getString(3));
-				menuDTO.setSide1(rs.getString(4));
-				menuDTO.setSide2(rs.getString(5));
-				menuDTO.setSide3(rs.getString(6));
-				menuDTO.setPrice(rs.getString(7));
+
+				menuDTO.setMenuID(rs.getInt(1));
+				menuDTO.setStoreID(rs.getString(2));
+				menuDTO.setMenuDate(rs.getString(3));
+				menuDTO.setMenuName(rs.getString(4));
+				menuDTO.setSide1(rs.getString(5));
+				menuDTO.setSide2(rs.getString(6));
+				menuDTO.setSide3(rs.getString(7));
+				menuDTO.setPrice(rs.getString(8));
 				list.add(menuDTO);					
 			}
 		}catch(Exception e) {
@@ -61,14 +62,15 @@ public class MenuDAO {
 
 			while(rs.next()) {
 				MenuDTO menuDTO= new MenuDTO();
-				
-				menuDTO.setStoreID(rs.getString(1));
-				menuDTO.setMenuDate(rs.getString(2));
-				menuDTO.setMenuName(rs.getString(3));
-				menuDTO.setSide1(rs.getString(4));
-				menuDTO.setSide2(rs.getString(5));
-				menuDTO.setSide3(rs.getString(6));
-				menuDTO.setPrice(rs.getString(7));
+
+				menuDTO.setMenuID(rs.getInt(1));
+				menuDTO.setStoreID(rs.getString(2));
+				menuDTO.setMenuDate(rs.getString(3));
+				menuDTO.setMenuName(rs.getString(4));
+				menuDTO.setSide1(rs.getString(5));
+				menuDTO.setSide2(rs.getString(6));
+				menuDTO.setSide3(rs.getString(7));
+				menuDTO.setPrice(rs.getString(8));
 				list.add(menuDTO);					
 			}
 		}catch(Exception e) {
@@ -111,14 +113,15 @@ public class MenuDAO {
 
 			while(rs.next()) {
 				MenuDTO menuDTO= new MenuDTO();
-				
-				menuDTO.setStoreID(rs.getString(1));
-				menuDTO.setMenuDate(rs.getString(2));
-				menuDTO.setMenuName(rs.getString(3));
-				menuDTO.setSide1(rs.getString(4));
-				menuDTO.setSide2(rs.getString(5));
-				menuDTO.setSide3(rs.getString(6));
-				menuDTO.setPrice(rs.getString(7));
+
+				menuDTO.setMenuID(rs.getInt(1));
+				menuDTO.setStoreID(rs.getString(2));
+				menuDTO.setMenuDate(rs.getString(3));
+				menuDTO.setMenuName(rs.getString(4));
+				menuDTO.setSide1(rs.getString(5));
+				menuDTO.setSide2(rs.getString(6));
+				menuDTO.setSide3(rs.getString(7));
+				menuDTO.setPrice(rs.getString(8));
 				list.add(menuDTO);					
 			}
 		}catch(Exception e) {
@@ -132,7 +135,7 @@ public class MenuDAO {
 		return list;	
 	}
 	public int write(MenuDTO menuDTO) {	//리뷰작성 함수
-		String SQL = "INSERT INTO menu values(?,?,?,?,?,?,?)";
+		String SQL = "INSERT INTO menu values(null,?,?,?,?,?,?,?)";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
@@ -159,8 +162,8 @@ public class MenuDAO {
 	}
 	
 	
-	public int delete(String storeID,String menuDate, String menuName) { // 삭제 함수
-		String SQL = "DELETE FROM menu WHERE storeID=? and menuDate=? and menuName=? ";
+	public int delete(int menuID) { // 삭제 함수
+		String SQL = "DELETE FROM menu WHERE menuID=?";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
@@ -168,9 +171,7 @@ public class MenuDAO {
 		try {
 			conn = DatabaseUtil.getConnection();
 			pstmt = conn.prepareStatement(SQL);
-			pstmt.setString(1,storeID);
-			pstmt.setString(2,menuDate);
-			pstmt.setString(3,menuName);
+			pstmt.setInt(1,menuID);
 			return pstmt.executeUpdate();		
 		}catch (Exception e) {
 			e.printStackTrace();

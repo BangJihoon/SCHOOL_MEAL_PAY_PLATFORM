@@ -78,8 +78,8 @@ public class UserDAO {
 		}
 		return -1; 	//오류시 -1
 	}
-	public int emailCheck(String email) {
-		String SQL = "SELECT * FROM user WHERE email = ?";
+	public String emailCheck(String email) {
+		String SQL = "SELECT userID FROM user WHERE email = ?";
 		Connection conn = null;
 		PreparedStatement pstmt =null;
 		ResultSet rs=null;
@@ -89,10 +89,10 @@ public class UserDAO {
 			pstmt.setString(1, email);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
-				return 0;	//이미 존재하는 회원
+				return rs.getString(1);
 			}
 			else
-				return 1;	//가입가능한 아이디
+				return null;
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -101,7 +101,7 @@ public class UserDAO {
 			try {if(pstmt!=null) pstmt.close();} catch (Exception e) {e.printStackTrace();}	
 			try {if(rs!=null) rs.close();} catch (Exception e) {e.printStackTrace();}	
 		}
-		return -1; 	//오류시 -1
+		return null;	//가입가능한 아이디
 	}
 	public String getEmail(String userID) {	// 리뷰작성자 아이디가져오는 함수
 		String SQL = "SELECT email FROM user WHERE userID = ? ";

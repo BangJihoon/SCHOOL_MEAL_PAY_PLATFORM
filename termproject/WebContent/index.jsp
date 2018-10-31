@@ -92,8 +92,7 @@
 	</nav>
  
 <!-- ㅡㅡㅡㅡㅡㅡㅡ 회전식  캐러셀 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ   -->
-
-<div id="demo" class="carousel slide" data-ride="carousel">
+<div id="demo" class="carousel slide" data-ride="carousel" >
 
  <!-- Indicators -->
   <ul class="carousel-indicators">
@@ -102,33 +101,30 @@
     <li data-target="#demo" data-slide-to="2"></li>
   </ul>
   
- <!-- 캐러설 본문, 컨텐트 -->
+<!-- 캐러설 본문, 컨텐트 -->
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="img/main.jpg">
-      
-      	<div class="carousel-caption">
-      		<h1  style="font-size:45; text-align:center">서경대학교 학식</h1>
-			<p class="text-center">스마트한 식권구매, 학식리뷰</p>	
-		</div>
+      <img src="img/main.jpg" class="d-block w-100" >
+      <div class="carousel-caption" >
+        <h2>서경대학교 <br> 학식</h2>
+        <p class="text-center">스마트한 식권구매, 학식리뷰 </p>  
+
+      </div>
     </div>
-    
-    
-    
     
     <div class="carousel-item">
       <img src="img/main2.jpg">
-      	<div class="carousel-caption">
-			<h2 class="text-center"> 줄이길어슬펐던 서경인이여 </h2>
-      <p class="text-center">오랫동안 줄서서 뽑지말고, 메뉴보고 바로구매</p>
-		</div>
+        <div class="carousel-caption">
+      <h2 class="text-center"> 줄이길어슬펐던 서경인이여 </h2>
+      <p class="text-center">오랫동안 줄서서 뽑지말고, <br>메뉴보고 바로구매</p> 
+    </div>
     </div>
     <div class="carousel-item">
       <img src="img/main5.jpg">
-      	<div class="carousel-caption">
-      		<h2 class="text-center"> 메뉴가 궁금했던 서경인에게 </h2>
-      		<p class="text-center"> 5G급 업로드로 화답</p> 
-		</div>
+        <div class="carousel-caption">
+      <h2 class="text-center"> 메뉴가 궁금했던 서경인에게 </h2>
+      <p class="text-center"> 5G급 업로드로 화답</p> 
+    </div>
     </div>
   </div>
   
@@ -145,7 +141,7 @@
 <script>
 $(document).ready(function(){
     // Activate Carousel with a specified interval
-    $("#myCarousel").carousel({interval: 2000});
+    $("#myCarousel").carousel({interval: 1000});
         
     // Enable Carousel Indicators
     $(".item1").click(function(){

@@ -1,6 +1,7 @@
 package menu;
 
 public class MenuDTO {
+	private int menuID;
 	private String storeID;
 	private String menuDate;
 	private String menuName;
@@ -9,6 +10,12 @@ public class MenuDTO {
 	private String side3;
 	private String price;
 	
+	public int getMenuID() {
+		return menuID;
+	}
+	public void setMenuID(int menuID) {
+		this.menuID = menuID;
+	}
 	public String getStoreID() {
 		return storeID;
 	}
@@ -54,9 +61,10 @@ public class MenuDTO {
 	public MenuDTO(){
 		
 	}
-	public MenuDTO(String storeID, String menuDate, String menuName, String side1, String side2, String side3,
+	public MenuDTO(int menuID,String storeID, String menuDate, String menuName, String side1, String side2, String side3,
 			String price) {
 		super();
+		this.menuID = menuID;
 		this.storeID = storeID;
 		this.menuDate = menuDate;
 		this.menuName = menuName;

@@ -102,7 +102,7 @@ color:#000000;
 
 <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 메뉴시작 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->			
 	
-			<div class="building">
+	<div class="building">
 		<div class="todayMenu">
 		<div class="card text-center">
 			  <div class="card-header">
@@ -122,15 +122,12 @@ color:#000000;
 						  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째"];
 						  today = new Date(); 
 						  weekperiod = (today.getDate())-(today.getDay()-1);
-						  document.write(today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br>");
+						  document.write("<p style='font-size:2vW;'>",today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1],"주 식단 <br></h1>");
 					</script>
-					<button class="btn btn-outline-primary" onclick='location.href="menuManage.jsp?storeID=buildingB"'>식단 관리</button>
+					<button class="btn btn-outline-primary mt-2" onclick='location.href="menuManage.jsp?storeID=buildingB"'>식단 관리하기</button>
+					<br><br>
 				</h5>
-			  </div>
-			  <div class="card-footer text-muted">
-			    
-			  </div>
-		</div>
+			  
 				
 				
 				<%	
@@ -145,170 +142,159 @@ color:#000000;
 					ArrayList<MenuDTO> list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
 					
 				%>
-				
-				<div class="form-inline">				
-					<div class="col-lg-2 offset-1">					
-						<p id=weekmenuTitle>월</p>
-						<%
-						for(int i=0;i<list.size();i++){							
-						%>							
-						<div class="weekmenu">
-							<div style="min-height:220px;">	
-								<p id=menuTitle><%=list.get(i).getMenuName()%></p>
-								<p><%=list.get(i).getSide1()%></p>
-								<p><%=list.get(i).getSide2()%></p>
-								<p><%=list.get(i).getSide3()%></p>
-								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
-							</div>
-						</div>	
-						<%
-						}
-						if(list.size() ==0){					
-						%>
-						<div class="col-lg-12">
-							<div class="menu">
-								<p id=menuTitle><%out.print("오늘 메뉴");%></p>						
-								<p id=menuPrice><%out.print("미등록");%></p>						
-							</div>
-						</div>
-						<%
-						}
-						%>
-						
-					</div>
+			<table class="table table-bordered table-hover">
+				<caption>
+   					<tr>
+						<p id=menuTitle>상시 메뉴 [김밥]</p>	
+					</tr>
+					<tr>
+						<p>돈까스 김밥</p>
+					</tr>
+					<tr>
+						<p>불고기 김밥</p>	
+					</tr>
+					<tr>
+						<p>유부 초밥</p>
+					</tr>
+					<tr>
+						<p id=menuPrice>3,300</p>	
+					</tr>
+				</caption>
+				<thead>
+			        <tr>
+			          <th style="width:20%;"><p id=weekmenuTitle>월</p></th>
+			          <th style="width:20%;"><p id=weekmenuTitle>화</p></th>
+			          <th style="width:20%;"><p id=weekmenuTitle>수</p></th>
+			          <th style="width:20%;"><p id=weekmenuTitle>목</p></th>
+			          <th style="width:20%;"><p id=weekmenuTitle>금</p></th>
+			        </tr>
+			    </thead>
+				<tbody>
 					
-					<div class="col-lg-2 ">					
-						<p id=weekmenuTitle>화</p>
+						<td colspan="1">
+							<%
+							for(int i=0;i<list.size();i++){							
+							%>	
+							<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+							<p><%=list.get(i).getSide1()%></p>
+							<p><%=list.get(i).getSide2()%></p>
+							<p><%=list.get(i).getSide3()%></p>
+							<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+							<%
+							}
+							if(list.size() ==0){					
+							%>
+							<p id=menuTitle><%out.print("오늘 메뉴");%></p>		
+							<p id=menuPrice><%out.print("미등록");%></p>
+							<%
+							}
+							%>
+						</td>
+						
+						
+						<td colspan="1">
 							<%
 							firstDayOfWeek.add(Calendar.DATE,1);
 							today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
 							list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
 							for(int i=0;i<list.size();i++){							
-							%>							
-							<div class="weekmenu">
-								<div style="min-height:220px;">			
-									<p id=menuTitle><%=list.get(i).getMenuName()%></p>
-									<p><%=list.get(i).getSide1()%></p>
-									<p><%=list.get(i).getSide2()%></p>
-									<p><%=list.get(i).getSide3()%></p>
-									<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
-								</div>
-							</div>	
+							%>	
+							<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+							<p><%=list.get(i).getSide1()%></p>
+							<p><%=list.get(i).getSide2()%></p>
+							<p><%=list.get(i).getSide3()%></p>
+							<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
 							<%
 							}
 							if(list.size() ==0){					
 							%>
-							<div class="col-lg-12">
-								<div class="menu">
 									<p id=menuTitle><%out.print("궁금 하지?");%></p>						
-									<p id=menuPrice><%out.print("좀만 참자");%></p>						
-								</div>
-							</div>
+									<p id=menuPrice><%out.print("좀만 참자");%></p>	
 							<%
 							}
 							%>
-					</div>
-					
-					<div class="col-lg-2 ">					
-						<p id=weekmenuTitle>수</p>
-						<%
-						firstDayOfWeek.add(Calendar.DATE,1);
-						today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
-						list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
-						for(int i=0;i<list.size();i++){							
-						%>							
-						<div class="weekmenu">
-							<div style="min-height:220px;">				
-								<p id=menuTitle><%=list.get(i).getMenuName()%></p>
-								<p><%=list.get(i).getSide1()%></p>
-								<p><%=list.get(i).getSide2()%></p>
-								<p><%=list.get(i).getSide3()%></p>
-								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
-							</div>
-						</div>	
-						<%
-						}
-						if(list.size() ==0){					
-						%>
-						<div class="col-lg-12">
-							<div class="menu">
+						</td>
+						
+				
+						<td colspan="1">
+							<%
+							firstDayOfWeek.add(Calendar.DATE,1);
+							today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
+							list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
+							for(int i=0;i<list.size();i++){							
+							%>	
+							<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+							<p><%=list.get(i).getSide1()%></p>
+							<p><%=list.get(i).getSide2()%></p>
+							<p><%=list.get(i).getSide3()%></p>
+							<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+							<%
+							}
+							if(list.size() ==0){					
+							%>
 								<p id=menuTitle><%out.print("누가제발");%></p>						
-								<p id=menuPrice><%out.print("밥먹을때");%></p>						
-							</div>
-						</div>
-						<%
-						}
-						%>
-					</div>
-					
-					<div class="col-lg-2 ">					
-						<p id=weekmenuTitle>목</p>
-						<%
-						firstDayOfWeek.add(Calendar.DATE,1);
-						today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
-						list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
-						for(int i=0;i<list.size();i++){							
-						%>							
-						<div class="weekmenu">
-							<div style="min-height:220px;">				
-								<p id=menuTitle><%=list.get(i).getMenuName()%></p>
-								<p><%=list.get(i).getSide1()%></p>
-								<p><%=list.get(i).getSide2()%></p>
-								<p><%=list.get(i).getSide3()%></p>
-								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
-							</div>
-						</div>	
-						<%
-						}
-						if(list.size() ==0){					
-						%>
-						<div class="col-lg-12">
-							<div class="menu">
+								<p id=menuPrice><%out.print("밥먹을때");%></p>	
+							<%
+							}
+							%>
+						</td>
+						
+						<td colspan="1">
+							<%
+							firstDayOfWeek.add(Calendar.DATE,1);
+							today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
+							list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
+							for(int i=0;i<list.size();i++){							
+							%>	
+							<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+							<p><%=list.get(i).getSide1()%></p>
+							<p><%=list.get(i).getSide2()%></p>
+							<p><%=list.get(i).getSide3()%></p>
+							<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+							<%
+							}
+							if(list.size() ==0){					
+							%>
 								<p id=menuTitle><%out.print("식당가서");%></p>						
-								<p id=menuPrice><%out.print("말해주라");%></p>						
-							</div>
-						</div>
-						<%
-						}
-						%>
-					</div>
-					
-					<div class="col-lg-2 ">					
-						<p id=weekmenuTitle>금</p>
-						<%
-						firstDayOfWeek.add(Calendar.DATE,1);
-						today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
-						list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
-						for(int i=0;i<list.size();i++){							
-						%>							
-						<div class="weekmenu">
-							<div style="min-height:220px;">				
-								<p id=menuTitle><%=list.get(i).getMenuName()%></p>
-								<p><%=list.get(i).getSide1()%></p>
-								<p><%=list.get(i).getSide2()%></p>
-								<p><%=list.get(i).getSide3()%></p>
-								<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
-							</div>
-						</div>	
-						<%
-						}
-						if(list.size() ==0){					
-						%>
-						<div class="col-lg-12">
-							<div class="menu">
+								<p id=menuPrice><%out.print("말해주라");%></p>		
+							<%
+							}
+							%>
+						</td>
+						
+						<td colspan="1">
+							<%
+							firstDayOfWeek.add(Calendar.DATE,1);
+							today = new SimpleDateFormat("yyyy-MM-dd").format(firstDayOfWeek.getTime());
+							list = menuDAO.getTodayMenu("buildingB",today);	//넣어줌
+							for(int i=0;i<list.size();i++){							
+							%>	
+							<p id=menuTitle><%=list.get(i).getMenuName()%></p>
+							<p><%=list.get(i).getSide1()%></p>
+							<p><%=list.get(i).getSide2()%></p>
+							<p><%=list.get(i).getSide3()%></p>
+							<p id=menuPrice><%=list.get(i).getPrice()%>원</p>
+							<%
+							}
+							if(list.size() ==0){					
+							%>
 								<p id=menuTitle><%out.print("등록아직");%></p>						
-								<p id=menuPrice><%out.print("안됬다고");%></p>						
-							</div>
-						</div>
-						<%
-						}
-						%>
-					</div>					
-				</div>	
-									
+								<p id=menuPrice><%out.print("안됬다고");%></p>		
+							<%
+							}
+							%>
+						<td>
+					</tr>
+				</tbody>
+			</table>		
 			</div>
+			  <div class="card-footer text-muted">
+			    
+			  </div>
 		</div>
-		<br><br><br><br>
+</div></div>
+			
+		<br><br>
 		
  <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ  J  s    ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
    <script language="JavaScript">
@@ -539,7 +525,7 @@ color:#000000;
 			</tfoot>
 		</table>
 		<br><br><br>
-		<input type="submit" class="btn btn-success" value="결 제 하 기" style="width: 200px; height: 70px">
+		<input type="submit" class="btn btn-outline-info" value="결 제 하 기" style="font-size:1.2em; width: 200px; height: 70px">
 	</form>
 </div>
 
