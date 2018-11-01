@@ -119,10 +119,10 @@ color:#000000;
 						     return Math.ceil((selectedDayOfMonth + monthFirstDateDay) / 7); 
 						 }
 						  
-						  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째"];
+						  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째주"];
 						  today = new Date(); 
 						  weekperiod = (today.getDate())-(today.getDay()-1);
-						  document.write("<p style='font-size:2vW;'>",today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1],"주 식단 <br></h1>");
+						  document.write("<p style='font-size:2vW;'>",today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br></h1>");
 					</script>
 					<button class="btn btn-outline-primary mt-2" onclick='location.href="menuManage.jsp?storeID=buildingC"'>식단 관리하기</button><br>
 				</h5>
