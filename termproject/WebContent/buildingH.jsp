@@ -125,12 +125,12 @@ color:#000000;
 						     return Math.ceil((selectedDayOfMonth + monthFirstDateDay) / 7); 
 						 }
 						  
-						  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째주"];
+						  wkday = ["첫째주","둘째주","셋째주","넷째주","다섯째"];
 						  today = new Date(); 
 						  weekperiod = (today.getDate())-(today.getDay()-1);
-						  document.write("<p style='font-size:2vW;'>",today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1]," 식단 <br></h1>");
+						  document.write("<p style='font-size:2vW;'>",today.getMonth()+1,"월 ",wkday[getWeekOfMonth(today)-1],"식단 <br></h1>");
 					</script>
-					<button class="btn btn-outline-primary mt-2" onclick='location.href="menuManage.jsp?storeID=buildingH"'>식단 관리하기</button><br>
+					<button class="btn btn-outline-primary mt-2" onclick='location.href="menuManage.jsp?storeID=buildingH"'> 식단 관리하기</button><br>
 				</h5>
 			  </div>
 			  <div class="card-footer text-muted">
@@ -289,18 +289,23 @@ color:#000000;
 //----자동계산 시스템 -------------
 		var t1_sell_price;	// 판매가격
 		var t1_amount;		// 수량
+
 		var t2_sell_price;	// 판매가격
 		var t2_amount;		// 수량
+
+
 		var total_sum;
 // 식권선택	
 		function init() { 
 			t1_sell_price = document.form.t1_sell_price.value;
 			t1_amount = document.form.t1_amount.value;
+
 			t2_sell_price = document.form.t2_sell_price.value;
 			t2_amount = document.form.t2_amount.value;
 			
 			total_sum = document.form.total_sum.value;
 		}
+
 //1번째 티켓
 		function enable_text(status)
 		{
@@ -340,6 +345,7 @@ color:#000000;
 				}
 			total();
 		}
+
 //2번째 티켓
 		
 		function t2_enable_text(status)
@@ -379,6 +385,8 @@ color:#000000;
 			t2_sum.value = commify(parseInt(t2_hm.value) * t2_sell_price);	//합계에 그대로 반환
 			total();
 		}
+
+
  //1,000단위 마다 콤마찍는 함수		
 		function commify(n) {
 			var reg = /(^[+-]?\d+)(\d{3})/; // 정규식 
@@ -406,7 +414,10 @@ color:#000000;
  
  <div class="container" style="text-align: center;">
 	 <form name="form" method="get" action='./payAction.jsp'>
-	 	<input type=hidden name="storeID" value="한림관">
+	 	<input type=hidden name="storeID" value="buildingH">
+	  	<input type=hidden name="t4_id" value="">
+	  	<input type=hidden name="t3_id" value="">
+	  	
 	 	<table class="ticket">
 		 	<thead>
 		 		<tr>
@@ -423,7 +434,8 @@ color:#000000;
 					<td>
 						<input type="checkbox" name="t1" onclick="enable_text(this.checked)"><br> 
 					  	<input type=hidden name="t1_sell_price" value="4300">
-					  	<input type=hidden name="ticketID" value="h1">
+					  	<input type=hidden name="t1_id" value="h1">
+					  	
 					</td>
 					<td>4,300원</td>
 					<td>
@@ -441,7 +453,8 @@ color:#000000;
 					<td>
 						<input type="checkbox" name="t2" onclick="t2_enable_text(this.checked)"><br> 
 					  	<input type=hidden name="t2_sell_price" value="43000">
-					  	<input type=hidden name="ticketID" value="h2">
+					  	<input type=hidden name="t2_id" value="h2">
+					  	
 					</td>
 					<td>43,000원</td>
 					<td>
@@ -499,3 +512,4 @@ color:#000000;
 	
 </body> 
 </html> 
+   

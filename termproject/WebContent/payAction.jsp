@@ -2,9 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ page import = "user.UserDAO" %>
 <%@ page import = "user.UserDTO" %>
+<%@ page import = "purchase.*" %>
+<%@ page import = "ticket.*" %>
 <%@ page import = "review.ReviewDAO" %>
 <%@ page import = "review.ReviewDTO" %> 
 <%@ page import = "java.io.PrintWriter" %>
+<%@ page import = "java.util.ArrayList"%>
 <html>
 <body>
 <!-- jQuery -->
@@ -14,8 +17,53 @@
 
 
 	<%
-		request.setCharacterEncoding("UTF-8");
 		String userID = null;
+		String storeID=null;
+		String storeName=null;
+	
+		int t1_amount=0;
+		int t2_amount=0;
+		int t3_amount=0;
+		int t4_amount=0;
+		
+		if(request.getParameter("t1_amount")!=null){
+			try{
+				t1_amount= Integer.parseInt(request.getParameter("t1_amount"));	
+			}catch(Exception e){
+				System.out.println("t1_amunot 오류");
+			}
+		}
+		if(request.getParameter("t2_amount")!=null){
+			try{
+				t2_amount= Integer.parseInt(request.getParameter("t2_amount"));	
+			}catch(Exception e){
+				System.out.println("t2_amount 오류");
+			}
+		}
+		if(request.getParameter("t3_amount")!=null){
+			try{
+				t3_amount= Integer.parseInt(request.getParameter("t3_amount"));	
+			}catch(Exception e){
+				System.out.println("t3_amount 오류");
+			}
+		}
+		if(request.getParameter("t4_amount")!=null){
+			try{
+				t4_amount= Integer.parseInt(request.getParameter("t4_amount"));	
+			}catch(Exception e){
+				System.out.println("t4_amount 오류");
+			}
+		}
+		String t1_id=null;
+		String t2_id=null;
+		String t3_id=null;
+		String t4_id=null;
+		
+		int total_sum = 0;
+		String sumtmp= null;
+		
+		
+		request.setCharacterEncoding("UTF-8");
 		if(session.getAttribute("userID")!=null){
 			userID = (String) session.getAttribute("userID");
 		}
@@ -29,28 +77,10 @@
 			return;
 		}
 // 전달받은 값 ㅡㅡㅡㅡㅡㅡㅡ 저장할 변수 
-		String storeID=null;
 		
-		int t1_sell_price = 0;
-		int t2_sell_price = 0;
-		int t3_sell_price = 0;
-		int t4_sell_price = 0;
-
-		int t1_sum= 0;
-		int t2_sum= 0;
-		int t3_sum= 0;
-		int t4_sum= 0;
-		
-		int t1_amount;
-		int t2_amount;
-		int t3_amount;
-		int t4_amount;
-		
-		int total_sum = 0;
-		String sumtmp= null;
 		
 // 합계 받아오기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ		
-		if(request.getParameter("total_sum")!=null){
+		if(request.getParameter("total_sum")!=null ||!request.getParameter("total_sum").equals("")){
 			try{
 				sumtmp= request.getParameter("total_sum");	
 				sumtmp= sumtmp.replaceAll(",","");
@@ -66,90 +96,42 @@
 			script.println("history.back()"); 
 			script.println("</script>");	
 		}
-// 학식당 ID  받아오기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+// 학식당 ID를 받아 , 식당이름 저장 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 		if(request.getParameter("storeID")!=null){
 			storeID =request.getParameter("storeID");
+			if(storeID.equals("buildingH"))
+				storeName="한림관";
+			else if(storeID.equals("buildingC"))
+				storeName="청운관";
+			else if(storeID.equals("buildingB"))
+				storeName="북악관";
 		}
-// 기타 정보  받아오기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ		
-		if(request.getParameter("t1_sell_price")!=null){
-			try{
-				t1_sell_price= Integer.parseInt(request.getParameter("t1_sell_price"));	
-			}catch(Exception e){
-				System.out.println("오류");
-			}
-		}
-		if(request.getParameter("t2_sell_price")!=null){
-			try{
-				t2_sell_price= Integer.parseInt(request.getParameter("t2_sell_price"));	
-			}catch(Exception e){
-				System.out.println("오류");
-			}
-		}
-		if(request.getParameter("t3_sell_price")!=null){
-			try{
-				t3_sell_price= Integer.parseInt(request.getParameter("t3_sell_price"));	
-			}catch(Exception e){
-				System.out.println("오류");
-			}
-		}if(request.getParameter("t4_sell_price")!=null){
-			try{
-				t4_sell_price= Integer.parseInt(request.getParameter("t4_sell_price"));	
-			}catch(Exception e){
-				System.out.println("오류");
-			}
-		}
+		if(request.getParameter("t1_id")!=null || !request.getParameter("t1_id").equals(""))
+			t1_id = request.getParameter("t1_id");
+		if(request.getParameter("t2_id")!=null || !request.getParameter("t2_id").equals(""))
+			t2_id = request.getParameter("t2_id");
+		if(request.getParameter("t3_id")!=null || !request.getParameter("t3_id").equals(""))
+			t3_id = request.getParameter("t3_id");
+		if(request.getParameter("t4_id")!=null || !request.getParameter("t4_id").equals(""))
+			t4_id = request.getParameter("t4_id");
 		
-		
-		if(request.getParameter("t1_sum")!=null){
-			try{
-				t1_sum= Integer.parseInt(request.getParameter("t1_sum"));	
-				t1_amount = t1_sell_price / t1_sum;
 
-			}catch(Exception e){
-				System.out.println("오류");
-			}
-		}
-		if(request.getParameter("t2_sum")!=null){
-			try{
-				t2_sum= Integer.parseInt(request.getParameter("t2_sum"));
-				t2_amount = t2_sell_price / t2_sum;
-
-			}catch(Exception e){
-				System.out.println("오류");
-			}
-		}
-		if(request.getParameter("t3_sum")!=null){
-			try{
-				t3_sum= Integer.parseInt(request.getParameter("t3_sum"));	
-				t3_amount = t3_sell_price / t3_sum;
-
-			}catch(Exception e){
-				System.out.println("오류");
-			}
-		}if(request.getParameter("t4_sum")!=null){
-			try{
-				t4_sum= Integer.parseInt(request.getParameter("t4_sum"));
-				t4_amount = t4_sell_price / t4_sum;
-
-			}catch(Exception e){
-				System.out.println("오류");
-			}
-		}
-		
-		
-		
 // DB에서 구매자 정보 (이름, 이메일) 받아오기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ		
 		UserDAO userDAO = new UserDAO();
 		String email = userDAO.getEmail(userID);
 		String name = userDAO.getName(userID);		
 		String merchant = null;	//주문번호 = userID,email,name, 총가격, 날짜, 등등.. 합친 문자열에 base64 인코딩
-		
+				
+				
+ 	 	PurchaseDAO purchaseDAO = new PurchaseDAO();
+
 		
 		if(userID!=null || total_sum!=0){
 	%>
 	
 	<script>
+	
 		var IMP = window.IMP; // 생략해도 괜찮습니다.
 		IMP.init('imp79893651'); //iamport 대신 자신의 "가맹점 식별코드"를 사용하시면 됩니다
 		
@@ -158,7 +140,7 @@
 	    pg : 'inicis', // version 1.1.0부터 지원.
 	    pay_method : 'card',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
-	    name : "<%=storeID%>",
+	    name : "<%=storeName%>",
 	    amount :"<%=total_sum%>",
 	    buyer_email : "<%=email%>",
 	    buyer_name : "<%=name%>",
@@ -167,39 +149,42 @@
 	    //buyer_postcode : '123-456',   
 	    m_redirect_url : 'http://localhost:8080/paySuccess.jsp'
 		}, function(rsp) {			//콜백함수
-			if ( rsp.success ) {		// 성공 ==TRUE
-				jQuery.ajax({
-		    		url: "/payAction.jsp", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
-		    		type: 'POST',
-		    		dataType: 'json',
-		    		data: {
-			    		imp_uid : rsp.imp_uid
-			    		//기타 필요한 데이터가 있으면 추가 전달
-			    		
-		    		}
-		    	}).done(function(data) {
-		    		//[2] 서버에서 REST API로 결제정보확인 및 서비스루틴이 정상적인 경우
-		    		if ( everythings_fine ) {
-		    			var msg = '결제가 완료되었습니다.';
-		    			//msg += '\n고유ID : ' + rsp.imp_uid;
-		    			//msg += '\n상점 거래ID : ' + rsp.merchant_uid;
-		    			msg += '\결제 금액 : ' + rsp.paid_amount;
-		    			msg += '카드 승인번호 : ' + rsp.apply_num;
-		    			
-		    			alert(msg);
-		    			location.href = "good.jsp";
-		    		} else {
-		    			//[3] 아직 제대로 결제가 되지 않았습니다.
-		    			//[4] 결제된 금액이 요청한 금액과 달라 결제를 자동취소처리하였습니다.
-		    		}
-		    	});
-		    } else {
+		    if ( rsp.success ) {
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '\n결제 금액 : ' + rsp.paid_amount;
+		        msg += '\n카드 승인번호 : ' + rsp.apply_num;
+			    alert(msg);
+			    <%
+			    	if(t1_amount!=0){
+			    	for(int i=0;i<t1_amount;i++)
+			    		purchaseDAO.write(userID,t1_id);
+			    	}
+				    if(t2_amount!=0){
+				    	for(int i=0;i<t2_amount;i++)
+				    		purchaseDAO.write(userID,t2_id);
+				    }
+				    if(t3_amount!=0){
+				    	for(int i=0;i<t3_amount;i++)
+				    		purchaseDAO.write(userID,t3_id);
+				    }
+				    if(t4_amount!=0){
+				    	for(int i=0;i<t4_amount;i++)
+				    		purchaseDAO.write(userID,t4_id);
+				    }
+			    %>
+			    location.href = "paySuccess.jsp";
+		    }  
+		    else {
 		        var msg = '결제에 실패하였습니다.\n';
 		        msg += '에러내용 : '+rsp.error_msg;
 			    alert(msg);
-			    location.href = "index.jsp";
+			    location.href = "<%=storeID%>.jsp";
 		    }
 		});
+			
+			
 	</script>
 	
 		<%}%>

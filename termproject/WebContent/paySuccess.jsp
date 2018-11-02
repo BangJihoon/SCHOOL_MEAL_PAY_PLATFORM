@@ -1,4 +1,9 @@
 <!-- 사용자-메인 -->
+<%@page import="ticket.TicketDAO"%>
+<%@page import="purchase.PurchaseDTO"%>
+<%@page import="purchase.PurchaseDAO"%>
+<%@page import="ticket.TicketDAO"%>
+<%@page import="ticket.TicketDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %>
@@ -6,10 +11,6 @@
 <%@ page import="menu.MenuDAO" %>
 <%@ page import="user.UserDTO" %>
 <%@ page import="menu.MenuDTO" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.GregorianCalendar" %>
-<%@ page import="java.util.Calendar" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
@@ -65,11 +66,11 @@ color:#000000;
 		
 		<div id="navbar1" class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">	
-	  			<li class="nav-item "> 
+	  			<li class="nav-item"> 
 	  				<a class="nav-link" id="navfont" href="index.jsp">메 인</a>
 	  			</li>
 	  			
-				<li class="nav-item dropdown active"> 
+				<li class="nav-item dropdown "> 
 					<a class="nav-link dropdown-toggle" id="navfont" data-toggle="dropdown"> 식 당 </a>
 					<div class="dropdown-menu" aria-labelledby="dropdown">
 						<a class="dropdown-item "  id="navfont" href="buildingH.jsp">한림관</a>
@@ -96,16 +97,19 @@ color:#000000;
 			<% 	
 		 	if(userID!=null){				
 			%>
+			<li class="nav nav-link right"> 
+	  			<a class="nav-link active" id="navfont" href="myPage.jsp">My Ticket</a>
+	  		</li>	
+	  		
 			<ul class="nav navbar-nav navbar-right">	
-				<li><a class="dropdown-item" href="myPage.jsp">MyPage</a></li>		
-				<li><a class="dropdown-item" href="logoutAction.jsp">Logout</a></li>		
+				<li><a class="nav-link" id="navfont" href="logoutAction.jsp">Logout</a></li>		
 			</ul>
  			<%
 		 	}else if(userID ==null){
 		 	%>
 			<ul class="nav navbar-nav navbar-right">					
-				<li><a class="nav-link" href="join.jsp">Join</a></li>
-				<li><a class="nav-link" href="login.jsp">Login</a></li>
+				<li><a class="dropdown-item" id="navfont" href="join.jsp">Join</a></li>
+				<li><a class="dropdown-item" id="navfont" href="login.jsp">Login</a></li>
 			</ul>
  			<%
 		 	}
@@ -118,55 +122,98 @@ color:#000000;
 	<div class="form-inline my-3" ></div>
 	
  <!-- ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 바디 시작 ,  구매한 식권  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->
- <SCRIPT>
- new jsb.Rule(".barcode, .barcode2", base2.Barcode.code128behaviour);
-</SCRIPT>
+ <SCRIPT> 
+ 	new jsb.Rule(".barcode, .barcode2", base2.Barcode.code128behaviour); 
+ 	function transferVal(code){
+
+ 		$('#reCode').val(code)
+
+ 		}	
+ </SCRIPT>
 
 
  <div class="container">
 	 	<table class="ticket" style="text-align:center;">
 		 	<thead>
+		 	
 		 		<tr>
-		 			<td colspan="6"> <h2>구매가 성공적으로 이루어졌습니다.</h2></td>
-		 		</tr>
+                    <td colspan="6"> <h2>구매가 성공적으로 이루어졌습니다.</h2></td>
+                </tr>
+                <tr>
+                    <td colspan="6"> <h1>  </h1></td>
+                </tr>
+                
 		 		<tr>
-		 			<td colspan="6"> <h1>  </h1></td>
+		 			<td colspan="6"> <h3><%=userID%>님의 식권</h3></td>
 		 		</tr>
 		 		<tr>
 		 			<td>식당</td>
-		 			<td>식권</td>
+		 			<td>종류</td>
 		 			<td>가격</td>
 		 			<td>구매일시</td>
-		 			<td>식권코드</td>
+		 			<td style="text-align:right;">식권코드</td>
 		 			<td>크게보기</td>
 		 		</tr>
 		 	</thead>
 		 	
 		 	<tbody>
-		 		<tr>
-					<td>한림관</td>
-		 			<td>한식</td>
-		 			<td>4300</td>
-		 			<td>2018-05-25</td>
-		 			<td><div class="barcode right">1234560asd</div></td>
-		 			<td><input type="button" class="btn btn-default" data-toggle="modal" href="#viewBarcode" value="+"></td>
-				</tr>
-				<tr>
-					<td>한림관</td>
-		 			<td>한식</td>
-		 			<td>4300</td>
-		 			<td>2018-05-25</td>
-		 			<td><div class="barcode right">12345600as</div></td>
-		 			<td><input type="button" class="btn btn-default" data-toggle="modal" href="#viewBarcode" value="+"></td>
-				</tr>
-				<tr>
-					<td>한림관</td>
-		 			<td>한식</td>
-		 			<td>4300</td>
-		 			<td>2018-05-25</td>
-		 			<td><div class="barcode right">1234560dasd</div></td>
-		 			<td><input type="button" class="btn btn-default" data-toggle="modal" href="#viewBarcode" value="+"></td>
-				</tr>
+			<%
+		 		TicketDAO ticketDAO = new TicketDAO();
+		 		
+		 	
+		 	 	PurchaseDAO purchaseDAO = new PurchaseDAO();
+		 		ArrayList<PurchaseDTO> purchaseList = purchaseDAO.getList(userID);
+		 		if(purchaseList.size()>0){
+			 		for(int i=0;i<purchaseList.size();i++){
+			 			PurchaseDTO purchase = purchaseList.get(i);					// 여러줄 list로 받아옴
+			 			TicketDTO ticket = ticketDAO.getInfo(purchase.getTicketID());	//한줄만 DTO형식으로 받아옴
+			 			if(!purchase.isUsed()){
+			%>
+			 		<tr>
+						<td><%=ticket.getStoreID()%></td>
+			 			<td><%=ticket.getMenuName()%></td>
+			 			<td><%=ticket.getPrice()%></td>
+			 			<td><%=purchase.getPurchaseDate()%></td>
+			 			<td style="height:10vh;"><div class="barcode right" id="code"><%=purchase.getCode()%></div></td>
+			 			<td><button class="btn btn-default" data-toggle="modal" href="#viewBarcode">+</button></td>
+				
+	<!-- 크게보기  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->		
+	
+			<div class="modal fade"  id="viewBarcode" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+				<div class="modal-dialog" >
+					<div class="modal-content" >
+					<!-- 등록 모달 헤더ㅡㅡ -->		
+						<div class="modal-header">
+							<h3 class="modal-title" id="modal">학식코드</h3>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>					
+							</button>
+						</div>
+					<!-- 모달 바디ㅡㅡ -->				
+						<div class="modal-body">
+							<div class="barcode2" style="height:40vh;" value=<%=purchase.getCode()%>><%=purchase.getCode()%></div>				
+						</div>					
+					</div>
+				</div>
+			</div>	
+						
+					</tr>
+			<%
+				}}}
+		 		else{
+			 %>	
+			 <tr></tr>
+					<tr>
+						<td colspan="6">
+							<p> 아직 구매한 식권이 없습니다.</p>
+						</td>
+					</tr>
+			 <tr></tr>
+			<%
+				}
+		 		//purchaseDAO.write(userID,"c4");
+	 		%>
+				
 			</tbody>
 			<tfoot>
 				<tr>
@@ -179,27 +226,10 @@ color:#000000;
 
 		<br><br><br>   
  
-<!-- 크게보기  ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ -->		
-
-		<div class="modal fade"  id="viewBarcode" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-				<!-- 등록 모달 헤더ㅡㅡ -->		
-					<div class="modal-header">
-						<h3 class="modal-title" id="modal">학식코드</h3>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>					
-						</button>
-					</div>
-				<!-- 신고 모달 바디ㅡㅡ -->				
-					<div class="modal-body">
-						<div class="barcode2" style="height:100%">asdasdasd</div>				
-					</div>					
-				</div>
-			</div>
-		</div>		
+	
    
 <!--   footer    -->
+	<br><br><br><br><br>
     <footer style="background-color: skyblue; color:black;">
         <div class="container">
             <div class="row">

@@ -447,7 +447,8 @@ color:#000000;
  
  <div class="container" style="text-align: center;">
 	 <form name="form" method="get" action='./payAction.jsp'>
-	 	 	<input type=hidden name="storeID" value="북악관">
+	 	 	<input type=hidden name="storeID" value="buildingB">
+	  		<input type=hidden name="t4_id" value="">
 	 
 	 	<table class="ticket">
 		 	<thead>
@@ -463,50 +464,56 @@ color:#000000;
 		 		<tr>
 					<td>김밥류</td>
 					<td>
-						<input type="checkbox" name="t3" onclick="t3_enable_text(this.checked)"><br> 
-					  	<input type=hidden name="t3_sell_price" value="3300">
+						<input type="checkbox" name="t1" onclick="enable_text(this.checked)"><br> 
+					  	<input type=hidden name="t1_sell_price" value="3300">
+					  	<input type=hidden name="t1_id" value="b1">
+					  	
 					</td>
 					<td>3,300원</td>
 					<td>
-						<input type="button" class="btn btn-default" name="t3_added" value=" + " onclick="t3_add();">
-						<input type="text"  class="btn btn-default"  style="width:30px;height:30px;"  name="t3_amount" value="0" size="5" onchange="change();">
-						<input type="button" class="btn btn-default" name="t3_deled" value=" - " onclick="t3_del();"><br> 
-					</td>
-					<td>
-						<input type="text" name="t3_sum" style="text-align:right " size="11" readonly >원
-					</td>
-				</tr>
-		 		<tr>
-					<td>식권 1장</td>
-					<td>
-						<input type="checkbox" name="t1" onclick="enable_text(this.checked)"><br> 
-					  	<input type=hidden name="t1_sell_price" value="4000">
-					</td>
-					<td>4,000원</td>
-					<td>
 						<input type="button" class="btn btn-default" name="t1_added" value=" + " onclick="add();">
-						<input type="text" class="btn btn-default"  style="width:30px;height:30px;" name="t1_amount" value="0" size="5" onchange="change();">
+						<input type="text"  class="btn btn-default"  style="width:30px;height:30px;"  name="t1_amount" value="0" size="5" onchange="change();">
 						<input type="button" class="btn btn-default" name="t1_deled" value=" - " onclick="del();"><br> 
 					</td>
 					<td>
 						<input type="text" name="t1_sum" style="text-align:right " size="11" readonly >원
 					</td>
 				</tr>
-
-				<tr>
-					<td>식권 10장</td>
+		 		<tr>
+					<td>Kitchen1</td>
 					<td>
 						<input type="checkbox" name="t2" onclick="t2_enable_text(this.checked)"><br> 
-					  	<input type=hidden name="t2_sell_price" value="40000">
+					  	<input type=hidden name="t2_sell_price" value="4000">
+					  	<input type=hidden name="t2_id" value="b2">
+					  	
 					</td>
-					<td>40,000원</td>
+					<td>4,000원</td>
 					<td>
 						<input type="button" class="btn btn-default" name="t2_added" value=" + " onclick="t2_add();">
-						<input type="text"  class="btn btn-default"  style="width:30px;height:30px;" name="t2_amount" value="0" size="5" onchange="t2_change();">
+						<input type="text" class="btn btn-default"  style="width:30px;height:30px;" name="t2_amount" value="0" size="5" onchange="change();">
 						<input type="button" class="btn btn-default" name="t2_deled" value=" - " onclick="t2_del();"><br> 
 					</td>
 					<td>
 						<input type="text" name="t2_sum" style="text-align:right " size="11" readonly >원
+					</td>
+				</tr>
+
+				<tr>
+					<td>Kitchen2</td>
+					<td>
+						<input type="checkbox" name="t3" onclick="t3_enable_text(this.checked)"><br> 
+					  	<input type=hidden name="t3_sell_price" value="4000">
+					  	<input type=hidden name="t3_id" value="b3">
+					  	
+					</td>
+					<td>4,000원</td>
+					<td>
+						<input type="button" class="btn btn-default" name="t3_added" value=" + " onclick="t3_add();">
+						<input type="text"  class="btn btn-default"  style="width:30px;height:30px;" name="t3_amount" value="0" size="5" onchange="t2_change();">
+						<input type="button" class="btn btn-default" name="t3_deled" value=" - " onclick="t3_del();"><br> 
+					</td>
+					<td>
+						<input type="text" name="t3_sum" style="text-align:right " size="11" readonly >원
 					</td>
 				</tr>
 				

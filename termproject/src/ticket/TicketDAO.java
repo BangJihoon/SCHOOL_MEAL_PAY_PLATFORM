@@ -40,5 +40,34 @@ public class TicketDAO { 	//데이터 가져오기만 필요!  저장,수정은 필요없는 fixed�
 		}
 		return list;	
 	}
+	
+	public TicketDTO getInfo(String ticketID){		//리스트 형식으로 업체별 해당 식권 반환
+		String SQL = "SELECT * FROM ticket WHERE ticketID=? ORDER BY menuName DESC";
+		
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		ResultSet rs =null;
+		TicketDTO ticketDTO= new TicketDTO();
+		try {
+			conn = DatabaseUtil.getConnection();
+			pstmt = conn.prepareStatement(SQL);
+			pstmt.setString(1,ticketID);
+			rs = pstmt.executeQuery();
 
+			
+			while(rs.next()) {
+				ticketDTO.setTicketID(rs.getString(1));
+				ticketDTO.setStoreID(rs.getString(2));
+				ticketDTO.setMenuName(rs.getString(3));
+				ticketDTO.setPrice(rs.getString(4));				
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try { if(conn!=null) conn.close();} catch(Exception e){e.printStackTrace();}
+			try { if(pstmt!=null) pstmt.close();} catch(Exception e){e.printStackTrace();}
+			try { if(rs!=null) rs.close();} catch(Exception e){e.printStackTrace();}
+		}
+		return ticketDTO;	
+	}
 }
