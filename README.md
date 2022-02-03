@@ -13,7 +13,7 @@
 + 학부 시절 점심시간마다 줄을 서서 결제하여 종이 식권을 낭비하는 시스템을 변화시키기 위해 혼자 도전한 프로젝트입니다.
 
 ### 개발환경 및 언어
-+ Eclipse, AWS Ubuntu,  MySQL,  Bootstrap3, Html5, Javascript, JQuery, JSP
++ AWS Ubuntu,  MySQL,  Bootstrap3, Html5, Javascript, JQuery, JSP
 
 ### 설명
 
