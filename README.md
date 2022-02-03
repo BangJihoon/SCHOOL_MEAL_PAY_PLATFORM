@@ -35,6 +35,7 @@
 + 로그인 / 로그아웃 (Session 값을 이용하여 처리)
 
 ### 구성도
+<img src=/structure.png></img>
 
 ### 릴리즈
-
+<img src=/deploy.png></img>
